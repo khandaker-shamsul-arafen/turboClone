@@ -13,4 +13,6 @@ class AppColors {
   static final Color parentBackground = HexColor('F0F0F0');
   static final Color navbarColor = HexColor('020129');
   static final Color navbarSelectedColor = HexColor('F10625');
+  static final Color gradientEnd = HexColor('343353');
+  static final Color gradientStart = HexColor('020129');
 }

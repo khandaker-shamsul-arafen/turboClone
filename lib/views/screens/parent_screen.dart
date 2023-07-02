@@ -51,9 +51,9 @@ class ParentScreenState extends State<ParentScreen> {
         ),
         centerTitle: true,
         systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: AppColors.background,
-          statusBarIconBrightness: Brightness.light,
-          statusBarBrightness: Brightness.dark,
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
         ),
         actions: [
           InkWell(
@@ -84,15 +84,52 @@ class ParentScreenState extends State<ParentScreen> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: AppColors.navbarColor,
-          selectedItemColor: AppColors.navbarSelectedColor,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          selectedLabelStyle: TextStyle(
-              fontSize: AppSizes.size13,
-              color: Colors.white,
-              fontWeight: FontWeight.w600),
-          items: []),
+        backgroundColor: AppColors.navbarColor,
+        selectedItemColor: AppColors.navbarSelectedColor,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        selectedLabelStyle: TextStyle(
+            fontSize: AppSizes.size13,
+            color: Colors.white,
+            fontWeight: FontWeight.w600),
+        unselectedLabelStyle: TextStyle(
+          fontSize: AppSizes.size12,
+          color: Colors.white.withOpacity(.8),
+        ),
+        unselectedItemColor: Colors.white.withOpacity(.7),
+        type: BottomNavigationBarType.fixed,
+        items: [
+          bottomNavBarItem(AppAssets.fixture, 'FIXTURE'),
+          bottomNavBarItem(AppAssets.favorite, 'FAVORITE'),
+          bottomNavBarItem(AppAssets.video, 'VIDEO'),
+          bottomNavBarItem(AppAssets.news, 'NEWS'),
+          bottomNavBarItem(AppAssets.standing, 'STANDINGS'),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+      ),
+    );
+  }
+
+  BottomNavigationBarItem bottomNavBarItem(String image, String label) {
+    return BottomNavigationBarItem(
+      activeIcon: Builder(builder: (context) {
+        return Image.asset(
+          image,
+          color: AppColors.navbarSelectedColor,
+          height: 24,
+          width: 24,
+        );
+      }),
+      icon: Builder(builder: (context) {
+        return Image.asset(
+          image,
+          height: 21,
+          width: 21,
+          color: Colors.white,
+        );
+      }),
+      label: label,
     );
   }
 }
