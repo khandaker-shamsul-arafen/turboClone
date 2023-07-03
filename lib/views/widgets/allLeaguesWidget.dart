@@ -91,14 +91,14 @@ class AllLeaguesWidget extends StatelessWidget {
                         style: TextStyle(
                             color: Colors.white, fontSize: AppSizes.size18),
                       ),
-                      // Container(
-                      //   color: Colors.grey.withOpacity(0.9),
-                      //   child: Text(
-                      //     state,
-                      //     style: TextStyle(
-                      //         color: Colors.white, fontSize: AppSizes.size18),
-                      //   ),
-                      // ),
+                      Container(
+                        color: AppColors.dateContainerColor,
+                        child: Text(
+                          state,
+                          style: TextStyle(
+                              color: Colors.white, fontSize: AppSizes.size12),
+                        ),
+                      ),
                     ],
                   ),
                 ),

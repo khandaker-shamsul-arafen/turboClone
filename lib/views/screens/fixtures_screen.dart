@@ -161,7 +161,7 @@ class _FixtureScreenState extends State<FixtureScreen> {
                             "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
                         teamName1: "Al Naser",
                         teamName2: "Miami",
-                        state: " New Work",
+                        state: " NS",
                         score1: "0",
                         score2: "1");
                   }),
