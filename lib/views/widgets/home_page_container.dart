@@ -15,11 +15,12 @@ class HomePageContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: AppSizes.newSize(8.0),
-      width: AppSizes.newSize(8.0),
+      alignment: Alignment.center,
+      height: AppSizes.newSize(5.0),
+      width: AppSizes.newSize(7.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        color: (selected) ? Colors.white : Colors.grey.withOpacity(0.5),
+        color: (selected) ? Colors.white : AppColors.dateContainerColor,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -28,14 +29,18 @@ class HomePageContainer extends StatelessWidget {
           Text(
             day,
             style: (selected)
-                ? TextStyle(color: Colors.black, fontSize: AppSizes.size14)
-                : TextStyle(color: Colors.white, fontSize: AppSizes.size14),
+                ? TextStyle(
+                    color: Colors.black, fontSize: AppSizes.size12, height: 1)
+                : TextStyle(
+                    color: Colors.white, fontSize: AppSizes.size12, height: 1),
           ),
           Text(
             date,
             style: (selected)
-                ? TextStyle(color: Colors.black, fontSize: AppSizes.size14)
-                : TextStyle(color: Colors.white, fontSize: AppSizes.size14),
+                ? TextStyle(
+                    color: Colors.black, fontSize: AppSizes.size12, height: 1)
+                : TextStyle(
+                    color: Colors.white, fontSize: AppSizes.size12, height: 1),
           )
         ],
       ),
