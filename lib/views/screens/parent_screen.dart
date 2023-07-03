@@ -79,7 +79,7 @@ class ParentScreenState extends State<ParentScreen> {
           FixtureScreen(),
           FavouriteScreen(),
           VideoScreen(),
-          NewsScreen(),
+          //newsScreen(),
           StandingsScreen(),
         ],
       ),

@@ -16,4 +16,5 @@ class AppColors {
   static final Color gradientEnd = HexColor('343353');
   static final Color gradientStart = HexColor('020129');
   static final Color dateContainerColor = HexColor('3E3E55');
+  static final Color fixtureContainerBackground = HexColor('EBEBF1');
 }
