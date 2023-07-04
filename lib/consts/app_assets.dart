@@ -10,4 +10,7 @@ class AppAssets {
   static const String video = 'assets/icons/video.png';
   static const String news = 'assets/icons/news.png';
   static const String standing = 'assets/icons/standings.png';
+  static const String back = "assets/icons/back.png";
+  static const String tabIndicator = "assets/images/tab_indicator.png";
+  static const String headerBar = "assets/matches/header_bar.png";
 }

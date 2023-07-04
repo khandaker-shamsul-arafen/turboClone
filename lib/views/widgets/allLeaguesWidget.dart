@@ -13,6 +13,7 @@ class AllLeaguesWidget extends StatelessWidget {
   final String state;
   final String score1;
   final String score2;
+  final bool recentMatches;
 
   const AllLeaguesWidget({
     super.key,
@@ -23,6 +24,7 @@ class AllLeaguesWidget extends StatelessWidget {
     required this.state,
     required this.score1,
     required this.score2,
+    this.recentMatches = false,
   });
 
   @override
@@ -34,100 +36,109 @@ class AllLeaguesWidget extends StatelessWidget {
           width: Get.width,
         ),
         SizedBox(
-          width: Get.width,
+          //width: Get.width,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipPath(
-                clipper: MyCustomClipper(),
-                child: Container(
-                  width: Get.width * 0.40,
-                  height: Get.height * 0.065,
-                  color: AppColors.fixtureContainerBackground,
-                  child: Center(
-                    child: ListTile(
-                      visualDensity:
-                          VisualDensity(horizontal: -4, vertical: -4),
-                      dense: true,
-                      contentPadding: EdgeInsets.only(
-                          left: AppSizes.newSize(1), right: 0.0),
-                      leading: Container(
-                        height: AppSizes.newSize(60),
-                        width: Get.width * 0.1,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(teamImage1))),
-                      ),
-                      title: Text(
-                        teamName1,
-                        style: TextStyle(
-                            fontSize: AppSizes.size13,
-                            fontWeight: FontWeight.bold),
+              Expanded(
+                flex: 4,
+                child: ClipPath(
+                  clipper: MyCustomClipper(),
+                  child: Container(
+                    width: Get.width * 0.40,
+                    height: Get.height * 0.065,
+                    color: AppColors.fixtureContainerBackground,
+                    child: Center(
+                      child: ListTile(
+                        visualDensity:
+                            const VisualDensity(horizontal: -4, vertical: -4),
+                        dense: true,
+                        contentPadding: EdgeInsets.only(
+                            left: AppSizes.newSize(1), right: 0.0),
+                        leading: Container(
+                          height: AppSizes.newSize(60),
+                          width: Get.width * 0.1,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(teamImage1))),
+                        ),
+                        title: Text(
+                          teamName1,
+                          style: TextStyle(
+                              fontSize: AppSizes.size13,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-              ClipPath(
-                clipper: MyCustomClipper2(),
-                child: Container(
-                  height: Get.height * 0.065,
-                  width: Get.width * 0.18,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        AppColors.gradientStart,
-                        AppColors.gradientEnd,
-                        AppColors.gradientStart
+              Expanded(
+                flex: 2,
+                child: ClipPath(
+                  clipper: MyCustomClipper2(),
+                  child: Container(
+                    height: Get.height * 0.065,
+                    width: Get.width * 0.18,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          AppColors.gradientStart,
+                          AppColors.gradientEnd,
+                          AppColors.gradientStart
+                        ],
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          "$score1 - $score2",
+                          style: TextStyle(
+                              color: Colors.white, fontSize: AppSizes.size18),
+                        ),
+                        Container(
+                          color: AppColors.dateContainerColor,
+                          child: Text(
+                            state,
+                            style: TextStyle(
+                                color: Colors.white, fontSize: AppSizes.size12),
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        "$score1 - $score2",
-                        style: TextStyle(
-                            color: Colors.white, fontSize: AppSizes.size18),
-                      ),
-                      Container(
-                        color: AppColors.dateContainerColor,
-                        child: Text(
-                          state,
-                          style: TextStyle(
-                              color: Colors.white, fontSize: AppSizes.size12),
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
               ),
-              ClipPath(
-                clipper: MyCustomClipper3(),
-                child: Container(
-                  width: Get.width * 0.416,
-                  height: Get.height * 0.065,
-                  color: AppColors.fixtureContainerBackground,
-                  child: Center(
-                    child: ListTile(
-                      visualDensity:
-                          VisualDensity(horizontal: -4, vertical: -4),
-                      dense: true,
-                      contentPadding: EdgeInsets.only(
-                          left: AppSizes.newSize(1.6), right: 0.0),
-                      leading: Container(
-                        height: AppSizes.newSize(60),
-                        width: Get.width * 0.1,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(teamImage1))),
-                      ),
-                      title: Text(
-                        teamName1,
-                        style: TextStyle(
-                            fontSize: AppSizes.size13,
-                            fontWeight: FontWeight.bold),
+              Expanded(
+                flex: 4,
+                child: ClipPath(
+                  clipper: MyCustomClipper3(),
+                  child: Container(
+                    width: Get.width * 0.416,
+                    height: Get.height * 0.065,
+                    color: AppColors.fixtureContainerBackground,
+                    child: Center(
+                      child: ListTile(
+                        visualDensity:
+                            VisualDensity(horizontal: -4, vertical: -4),
+                        dense: true,
+                        contentPadding: EdgeInsets.only(
+                            left: AppSizes.newSize(1.6), right: 0.0),
+                        leading: Container(
+                          height: AppSizes.newSize(60),
+                          width: Get.width * 0.1,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(teamImage1))),
+                        ),
+                        title: Text(
+                          teamName1,
+                          style: TextStyle(
+                              fontSize: AppSizes.size13,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),

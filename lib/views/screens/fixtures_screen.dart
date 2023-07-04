@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:turbo_coone1/views/screens/fixtures_details.dart';
+import 'package:turbo_coone1/views/screens/league_details.dart';
 
 import '../../consts/app_colors.dart';
 import '../../consts/app_sizes.dart';
@@ -147,23 +149,33 @@ class _FixtureScreenState extends State<FixtureScreen> {
             ...List.generate(10, (i) {
               return Column(
                 children: [
-                  LeagueNameWidget(
-                    ligueImage:
-                        "https://cdn.sportmonks.com/images/soccer/leagues/29/989.png",
-                    ligueText: "CHAMPION",
-                    ligueCountry: "BANGLADESH",
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => LeagueDetailsScreen());
+                    },
+                    child: LeagueNameWidget(
+                      ligueImage:
+                          "https://cdn.sportmonks.com/images/soccer/leagues/29/989.png",
+                      ligueText: "CHAMPION",
+                      ligueCountry: "BANGLADESH",
+                    ),
                   ),
                   ...List.generate(2, (i) {
-                    return AllLeaguesWidget(
-                        teamImage1:
-                            "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
-                        teamImage2:
-                            "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
-                        teamName1: "Al Naser",
-                        teamName2: "Miami",
-                        state: " NS",
-                        score1: "0",
-                        score2: "1");
+                    return GestureDetector(
+                      onTap: () {
+                        FixturesDetailsScreen();
+                      },
+                      child: AllLeaguesWidget(
+                          teamImage1:
+                              "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
+                          teamImage2:
+                              "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
+                          teamName1: "Al Naser",
+                          teamName2: "Miami",
+                          state: " NS",
+                          score1: "0",
+                          score2: "1"),
+                    );
                   }),
                 ],
               );
