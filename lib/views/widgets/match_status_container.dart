@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import '../../consts/app_sizes.dart';
@@ -5,8 +7,15 @@ import '../../consts/app_sizes.dart';
 class MatchStatusContainer extends StatelessWidget {
   final String matchStatus;
   final String season;
-  const MatchStatusContainer(
-      {super.key, required this.matchStatus, required this.season});
+  final bool ptStats;
+  final VoidCallback? onTap;
+  const MatchStatusContainer({
+    super.key,
+    required this.matchStatus,
+    this.season = '',
+    this.ptStats = false,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +41,16 @@ class MatchStatusContainer extends StatelessWidget {
             SizedBox(
               width: AppSizes.newSize(.5),
             ),
-            Text(
-              "Season",
-              style: TextStyle(
-                  fontSize: AppSizes.size15, fontWeight: FontWeight.bold),
-            )
+            (ptStats)
+                ? GestureDetector(
+                    child: Icon(Icons.keyboard_arrow_right),
+                    onTap: onTap,
+                  )
+                : Text(
+                    "Season",
+                    style: TextStyle(
+                        fontSize: AppSizes.size15, fontWeight: FontWeight.bold),
+                  )
           ],
         ),
       ),

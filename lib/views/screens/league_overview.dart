@@ -121,7 +121,20 @@ class LeagueOverview extends StatelessWidget {
                         height: AppSizes.newSize(1),
                       ),
                       const OverviewHeaderContainer(),
-                      ...List.generate(4, (index) => TeamOverViewWidget()),
+                      ...List.generate(
+                          4,
+                          (index) => TeamOverViewWidget(
+                                number: index,
+                                image:
+                                    'https://cdn.sportmonks.com/images/soccer/leagues/1/609.png',
+                                name: 'A. JUNIORS',
+                                p: '0',
+                                w: '0',
+                                d: '1',
+                                l: '2',
+                                gd: '0',
+                                pts: '0',
+                              )),
                     ],
                   ),
                 ),

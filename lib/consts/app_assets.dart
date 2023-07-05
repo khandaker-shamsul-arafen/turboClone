@@ -13,4 +13,7 @@ class AppAssets {
   static const String back = "assets/icons/back.png";
   static const String tabIndicator = "assets/images/tab_indicator.png";
   static const String headerBar = "assets/matches/header_bar.png";
+  static const String date = "assets/matches/date.png";
+  static const String referee = "assets/matches/referee.png";
+  static const String venue = "assets/matches/venue.png";
 }

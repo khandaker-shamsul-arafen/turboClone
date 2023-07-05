@@ -3,7 +3,26 @@ import 'package:flutter/material.dart';
 import '../../consts/app_sizes.dart';
 
 class TeamOverViewWidget extends StatelessWidget {
-  const TeamOverViewWidget({super.key});
+  final int number;
+  final String image;
+  final String name;
+  final String p;
+  final String w;
+  final String d;
+  final String l;
+  final String gd;
+  final String pts;
+  const TeamOverViewWidget(
+      {super.key,
+      required this.number,
+      required this.image,
+      required this.name,
+      required this.p,
+      required this.w,
+      required this.d,
+      required this.l,
+      required this.gd,
+      required this.pts});
 
   @override
   Widget build(BuildContext context) {
@@ -22,22 +41,20 @@ class TeamOverViewWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 5),
                 child: Row(
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
-                        "1",
+                        number.toString(),
                         textAlign: TextAlign.left,
                       ),
                     ),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                     Expanded(
                       child: Container(
                         height: AppSizes.newSize(4),
                         width: AppSizes.newSize(4),
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://cdn.sportmonks.com/images/soccer/leagues/1/609.png"))),
+                            image: DecorationImage(image: NetworkImage(image))),
                       ),
                     ),
 
@@ -47,7 +64,7 @@ class TeamOverViewWidget extends StatelessWidget {
                     Expanded(
                       flex: 5,
                       child: Text(
-                        "A. JUNIORS",
+                        name,
                         style: TextStyle(
                             fontSize: AppSizes.size14,
                             fontWeight: FontWeight.normal),
@@ -61,7 +78,7 @@ class TeamOverViewWidget extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Text(
-                "0",
+                p,
                 style: TextStyle(
                     fontSize: AppSizes.size14, fontWeight: FontWeight.normal),
                 textAlign: TextAlign.center,
@@ -70,7 +87,7 @@ class TeamOverViewWidget extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Text(
-                "0",
+                w,
                 style: TextStyle(
                     fontSize: AppSizes.size14, fontWeight: FontWeight.normal),
                 textAlign: TextAlign.center,
@@ -79,7 +96,7 @@ class TeamOverViewWidget extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Text(
-                "0",
+                d,
                 style: TextStyle(
                     fontSize: AppSizes.size14, fontWeight: FontWeight.normal),
                 textAlign: TextAlign.center,
@@ -88,7 +105,7 @@ class TeamOverViewWidget extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Text(
-                "0",
+                l,
                 style: TextStyle(
                     fontSize: AppSizes.size14, fontWeight: FontWeight.normal),
                 textAlign: TextAlign.center,
@@ -97,7 +114,7 @@ class TeamOverViewWidget extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Text(
-                "0",
+                gd,
                 style: TextStyle(
                     fontSize: AppSizes.size14, fontWeight: FontWeight.normal),
                 textAlign: TextAlign.center,
@@ -106,7 +123,7 @@ class TeamOverViewWidget extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Text(
-                "0",
+                pts,
                 style: TextStyle(
                     fontSize: AppSizes.size14, fontWeight: FontWeight.normal),
                 textAlign: TextAlign.center,

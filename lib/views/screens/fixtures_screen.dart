@@ -163,7 +163,7 @@ class _FixtureScreenState extends State<FixtureScreen> {
                   ...List.generate(2, (i) {
                     return GestureDetector(
                       onTap: () {
-                        FixturesDetailsScreen();
+                        Get.to(() => FixturesDetailsScreen());
                       },
                       child: AllLeaguesWidget(
                           teamImage1:
