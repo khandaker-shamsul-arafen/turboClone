@@ -10,10 +10,16 @@ import '../widgets/match_status_container.dart';
 import '../widgets/overview_header_container.dart';
 import '../widgets/team_overview_widget.dart';
 import '../widgets/top_scorer_widget.dart';
+import 'fixtures_details.dart';
 
-class LeagueOverview extends StatelessWidget {
+class LeagueOverview extends StatefulWidget {
   const LeagueOverview({super.key});
 
+  @override
+  State<LeagueOverview> createState() => _LeagueOverviewState();
+}
+
+class _LeagueOverviewState extends State<LeagueOverview> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,16 +51,21 @@ class LeagueOverview extends StatelessWidget {
                 ...List.generate(2, (index) {
                   return Column(
                     children: [
-                      const AllLeaguesWidget(
-                          teamImage1:
-                              "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
-                          teamImage2:
-                              "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
-                          teamName1: "Al Naser",
-                          teamName2: "Miami",
-                          state: " NS",
-                          score1: "0",
-                          score2: "1"),
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => const FixturesDetailsScreen());
+                        },
+                        child: const AllLeaguesWidget(
+                            teamImage1:
+                                "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
+                            teamImage2:
+                                "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
+                            teamName1: "Al Naser",
+                            teamName2: "Miami",
+                            state: " NS",
+                            score1: "0",
+                            score2: "1"),
+                      ),
                       Container(
                         height: AppSizes.newSize(2),
                         width: Get.width,
@@ -81,16 +92,21 @@ class LeagueOverview extends StatelessWidget {
                   ),
                 ),
               ),
-              const AllLeaguesWidget(
-                  teamImage1:
-                      "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
-                  teamImage2:
-                      "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
-                  teamName1: "Al Naser",
-                  teamName2: "Miami",
-                  state: " NS",
-                  score1: "0",
-                  score2: "1"),
+              GestureDetector(
+                onTap: () {
+                  Get.to(() => const FixturesDetailsScreen());
+                },
+                child: const AllLeaguesWidget(
+                    teamImage1:
+                        "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
+                    teamImage2:
+                        "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
+                    teamName1: "Al Naser",
+                    teamName2: "Miami",
+                    state: " NS",
+                    score1: "0",
+                    score2: "1"),
+              ),
               Container(
                 height: AppSizes.newSize(2),
                 width: Get.width,
@@ -120,7 +136,9 @@ class LeagueOverview extends StatelessWidget {
                       SizedBox(
                         height: AppSizes.newSize(1),
                       ),
-                      const OverviewHeaderContainer(),
+                      const OverviewHeaderContainer(
+                        buttonIndex: 1,
+                      ),
                       ...List.generate(
                           4,
                           (index) => TeamOverViewWidget(
@@ -134,6 +152,8 @@ class LeagueOverview extends StatelessWidget {
                                 l: '2',
                                 gd: '0',
                                 pts: '0',
+                                buttonIndex: 1,
+                                card: 'w',
                               )),
                     ],
                   ),

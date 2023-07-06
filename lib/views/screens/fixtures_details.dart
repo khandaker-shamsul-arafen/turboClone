@@ -6,6 +6,12 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../consts/app_assets.dart';
 import '../../consts/app_colors.dart';
 import '../../consts/app_sizes.dart';
+import 'fixture_preview_tabbar.dart';
+import 'league_fixtures.dart';
+import 'league_overview.dart';
+import 'league_playerstats.dart';
+import 'league_table.dart';
+import 'league_teams.dart';
 
 class FixturesDetailsScreen extends StatefulWidget {
   const FixturesDetailsScreen({super.key});
@@ -16,13 +22,13 @@ class FixturesDetailsScreen extends StatefulWidget {
 
 class _FixturesDetailsScreenState extends State<FixturesDetailsScreen>
     with TickerProviderStateMixin {
-  // TabController? _tabController;
+  TabController? _tabController;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _tabController = TabController(length: 5, vsync: this);
-  // }
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -267,6 +273,52 @@ class _FixturesDetailsScreenState extends State<FixturesDetailsScreen>
                       ),
                     ),
                   ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: AppSizes.newSize(2),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                width: Get.width,
+                color: Colors.white,
+                child: TabBar(
+                    isScrollable: true,
+                    controller: _tabController,
+                    labelColor: Colors.black,
+                    labelPadding: const EdgeInsets.symmetric(horizontal: 18),
+                    unselectedLabelColor: Colors.black.withOpacity(.9),
+                    labelStyle: TextStyle(
+                      fontSize: AppSizes.size14,
+                      fontWeight: FontWeight.normal,
+                    ),
+                    indicatorColor: Colors.transparent,
+                    indicator: const BoxDecoration(
+                        image: DecorationImage(
+                      alignment: Alignment.bottomCenter,
+                      image: AssetImage(
+                        AppAssets.tabIndicator,
+                      ),
+                    )),
+                    tabs: const [
+                      Tab(text: "PREVIEW"),
+                      Tab(text: "BROADCAST"),
+                      Tab(text: "TABLE"),
+                      Tab(text: "H2H"),
+                    ]),
+              ),
+            ),
+            Expanded(
+              flex: 12,
+              child: TabBarView(
+                controller: _tabController,
+                children: const [
+                  FixturePreviewTabbar(),
+                  LeagueTable(),
+                  LeagueFixtures(),
+                  LeaguePlayerStats(),
                 ],
               ),
             )

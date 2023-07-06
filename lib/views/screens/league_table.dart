@@ -1,13 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:turbo_coone1/utils/helpers.dart';
+import 'package:turbo_coone1/views/widgets/card_clipper.dart';
 
 import '../../consts/app_colors.dart';
 import '../../consts/app_sizes.dart';
 import '../widgets/overview_header_container.dart';
 import '../widgets/team_overview_widget.dart';
 
-class LeagueTable extends StatelessWidget {
+class LeagueTable extends StatefulWidget {
   const LeagueTable({super.key});
 
+  @override
+  State<LeagueTable> createState() => _LeagueTableState();
+}
+
+class _LeagueTableState extends State<LeagueTable> {
+  int buttonIndex1 = 3;
+  String dropdownvalue = 'OVERALL';
+
+  // List of items in our dropdown menu
+  var items = [
+    'OVERALL',
+    'HOME',
+    'AWAY',
+  ];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,57 +37,108 @@ class LeagueTable extends StatelessWidget {
             Row(
               children: [
                 Card(
+                  color: (buttonIndex1 == 1)
+                      ? AppColors.leagueNameTabbarBt
+                      : Colors.white,
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        buttonIndex1 = 1;
+                      });
+                    },
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                          vertical: AppSizes.newSize(.5),
+                          vertical: AppSizes.newSize(.1),
                           horizontal: AppSizes.newSize(1)),
-                      child: Text("FULL"),
+                      child: Text(
+                        "FULL",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: AppSizes.size16),
+                      ),
                     ),
                   ),
                 ),
                 Card(
+                  color: (buttonIndex1 == 2)
+                      ? AppColors.leagueNameTabbarBt
+                      : Colors.white,
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        buttonIndex1 = 2;
+                      });
+                    },
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                          vertical: AppSizes.newSize(.5),
+                          vertical: AppSizes.newSize(.1),
                           horizontal: AppSizes.newSize(1)),
-                      child: Text("SHORT"),
+                      child: Text("SHORT",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: AppSizes.size16)),
                     ),
                   ),
                 ),
                 Card(
+                  color: (buttonIndex1 == 3)
+                      ? AppColors.leagueNameTabbarBt
+                      : Colors.white,
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      setState(() {
+                        buttonIndex1 = 3;
+                      });
+                    },
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                          vertical: AppSizes.newSize(.5),
+                          vertical: AppSizes.newSize(.1),
                           horizontal: AppSizes.newSize(1)),
-                      child: const Text("FORM"),
+                      child: Text("FORM",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: AppSizes.size16)),
                     ),
                   ),
                 ),
                 const Spacer(),
-                Card(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: AppSizes.newSize(.5),
-                        horizontal: AppSizes.newSize(1)),
-                    child: Row(
-                      children: [
-                        const Text(
-                          "OVERALL",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                ClipPath(
+                  //  clipper: DropDownClipper(),
+                  child: Container(
+                    color: Colors.white,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          left: AppSizes.newSize(1),
+                          right: AppSizes.newSize(1),
+                          top: AppSizes.newSize(.3),
+                          bottom: AppSizes.newSize(.3)),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          isDense: true,
+                          value: dropdownvalue,
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          items: items.map((String items) {
+                            return DropdownMenuItem(
+                              value: items,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    right: AppSizes.newSize(1.7)),
+                                child: Text(
+                                  items,
+                                  style: TextStyle(
+                                      fontSize: AppSizes.size14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownvalue = newValue!;
+                            });
+                          },
                         ),
-                        SizedBox(
-                          width: AppSizes.newSize(1.8),
-                        ),
-                        const Icon(Icons.keyboard_arrow_down)
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -86,10 +153,10 @@ class LeagueTable extends StatelessWidget {
                 ...List.generate(3, (i) {
                   return Column(
                     children: [
-                      const OverviewHeaderContainer(),
+                      OverviewHeaderContainer(buttonIndex: buttonIndex1),
                       ...List.generate(5, (i) {
                         return TeamOverViewWidget(
-                          number: i,
+                          number: i + 1,
                           image:
                               'https://cdn.sportmonks.com/images/soccer/leagues/1/609.png',
                           name: 'A. JUNIORS',
@@ -99,6 +166,8 @@ class LeagueTable extends StatelessWidget {
                           l: '2',
                           gd: '0',
                           pts: '0',
+                          buttonIndex: buttonIndex1,
+                          card: "w",
                         );
                       }),
                     ],

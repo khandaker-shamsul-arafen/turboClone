@@ -5,7 +5,8 @@ import '../../consts/app_sizes.dart';
 import '../../consts/app_styles.dart';
 
 class OverviewHeaderContainer extends StatelessWidget {
-  const OverviewHeaderContainer({super.key});
+  final int buttonIndex;
+  const OverviewHeaderContainer({super.key, required this.buttonIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -35,76 +36,121 @@ class OverviewHeaderContainer extends StatelessWidget {
               textAlign: TextAlign.left,
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              'P',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: AppSizes.size13,
-                color: Colors.white.withOpacity(.8),
+          Visibility(
+            visible: (buttonIndex == 1)
+                ? true
+                : (buttonIndex == 2)
+                    ? true
+                    : false,
+            child: Expanded(
+              flex: 1,
+              child: Text(
+                'P',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: AppSizes.size13,
+                  color: Colors.white.withOpacity(.8),
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              'W',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: AppSizes.size13,
-                color: Colors.white.withOpacity(.8),
+          Visibility(
+            visible: (buttonIndex == 1) ? true : false,
+            child: Expanded(
+              flex: 1,
+              child: Text(
+                'W',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: AppSizes.size13,
+                  color: Colors.white.withOpacity(.8),
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              'D',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: AppSizes.size13,
-                color: Colors.white.withOpacity(.8),
+          Visibility(
+            visible: (buttonIndex == 1) ? true : false,
+            child: Expanded(
+              flex: 1,
+              child: Text(
+                'D',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: AppSizes.size13,
+                  color: Colors.white.withOpacity(.8),
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              'L',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: AppSizes.size13,
-                color: Colors.white.withOpacity(.8),
+          Visibility(
+            visible: (buttonIndex == 1) ? true : false,
+            child: Expanded(
+              flex: 1,
+              child: Text(
+                'L',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: AppSizes.size13,
+                  color: Colors.white.withOpacity(.8),
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              'GD',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: AppSizes.size13,
-                color: Colors.white.withOpacity(.8),
+          Visibility(
+            visible: (buttonIndex == 1)
+                ? true
+                : (buttonIndex == 2)
+                    ? true
+                    : false,
+            child: Expanded(
+              flex: 1,
+              child: Text(
+                'GD',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: AppSizes.size13,
+                  color: Colors.white.withOpacity(.8),
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
           ),
-          Expanded(
-            flex: 2,
-            child: Text(
-              'PTS',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: AppSizes.size13,
-                color: Colors.white.withOpacity(.8),
+          Visibility(
+            visible: (buttonIndex == 1)
+                ? true
+                : (buttonIndex == 2)
+                    ? true
+                    : false,
+            child: Expanded(
+              flex: 2,
+              child: Text(
+                'PTS',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: AppSizes.size13,
+                  color: Colors.white.withOpacity(.8),
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
+            ),
+          ),
+          Visibility(
+            visible: (buttonIndex == 3) ? true : false,
+            child: Expanded(
+              flex: 2,
+              child: Text(
+                'FORM',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: AppSizes.size13,
+                  color: Colors.white.withOpacity(.8),
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
           )
         ],
