@@ -4,6 +4,7 @@ import '../../consts/app_colors.dart';
 import '../../consts/app_sizes.dart';
 import '../widgets/team_summary_widget.dart';
 import '../widgets/venue_container.dart';
+import '../widgets/weathet_report_widget.dart';
 
 class FixturePreviewTabbar extends StatelessWidget {
   const FixturePreviewTabbar({super.key});
@@ -16,13 +17,19 @@ class FixturePreviewTabbar extends StatelessWidget {
         margin: EdgeInsets.all(AppSizes.newSize(1)),
         padding: const EdgeInsets.all(5),
         color: AppColors.overviewBackgroundColor,
-        child: Column(children: [
-          TeamSummaryWidget(),
-          SizedBox(
-            height: AppSizes.newSize(1),
-          ),
-          VenueContainerWidget(),
-        ]),
+        child: SingleChildScrollView(
+          child: Column(children: [
+            const TeamSummaryWidget(),
+            SizedBox(
+              height: AppSizes.newSize(1),
+            ),
+            const VenueContainerWidget(),
+            SizedBox(
+              height: AppSizes.newSize(1),
+            ),
+            const WeatherReportWidget(),
+          ]),
+        ),
       ),
     );
   }

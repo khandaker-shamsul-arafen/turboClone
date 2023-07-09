@@ -72,31 +72,130 @@ class VenueContainerWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                children: [
-                  CachedNetworkImage(
-                    width: AppSizes.newSize(16),
-                    height: AppSizes.newSize(11),
-                    imageUrl:
-                        "https://cdn.sportmonks.com/images/soccer/venues/4/2020.png",
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
+              Padding(
+                padding: EdgeInsets.only(top: AppSizes.newSize(1.5)),
+                child: Column(
+                  children: [
+                    CachedNetworkImage(
+                      width: AppSizes.newSize(16),
+                      height: AppSizes.newSize(11),
+                      imageUrl:
+                          "https://cdn.sportmonks.com/images/soccer/venues/4/2020.png",
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      fit: BoxFit.contain,
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: AppSizes.newSize(1),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Name",
+                    style: TextStyle(
+                        height: 1.5,
+                        color: Colors.grey,
+                        fontSize: AppSizes.size14),
+                  ),
+                  Text(
+                    "Capacity",
+                    style: TextStyle(
+                        height: 1.5,
+                        color: Colors.grey,
+                        fontSize: AppSizes.size14),
+                  ),
+                  Text(
+                    "Surface",
+                    style: TextStyle(
+                        height: 1.5,
+                        color: Colors.grey,
+                        fontSize: AppSizes.size14),
+                  ),
+                  Text(
+                    "Address",
+                    style: TextStyle(
+                        height: 1.5,
+                        color: Colors.grey,
+                        fontSize: AppSizes.size14),
+                  ),
+                  Text(
+                    "City",
+                    style: TextStyle(
+                        height: 1.5,
+                        color: Colors.grey,
+                        fontSize: AppSizes.size14),
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: AppSizes.newSize(2),
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      //padding: EdgeInsets.only(right: 5),
+                      //width: 130,
+                      child: Text(
+                        "Wiklof Holding ergergeg",
+                        style: TextStyle(
+                            height: 1.7,
+                            fontSize: AppSizes.size13,
+                            fontWeight: FontWeight.w600,
+                            overflow: TextOverflow.ellipsis),
                       ),
                     ),
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                    fit: BoxFit.contain,
-                  )
-                ],
-              )
+                    Text(
+                      "1650",
+                      style: TextStyle(
+                          height: 1.7,
+                          fontSize: AppSizes.size13,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      "grass",
+                      style: TextStyle(
+                          height: 1.7,
+                          fontSize: AppSizes.size13,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      "Idrottsgatan",
+                      style: TextStyle(
+                          height: 1.7,
+                          fontSize: AppSizes.size13,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      "Mariehamn",
+                      style: TextStyle(
+                          height: 1.7,
+                          fontSize: AppSizes.size13,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         )

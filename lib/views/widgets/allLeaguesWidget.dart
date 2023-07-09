@@ -80,7 +80,7 @@ class AllLeaguesWidget extends StatelessWidget {
                   clipper: MyCustomClipper2(),
                   child: Container(
                     height: Get.height * 0.065,
-                    width: Get.width * 0.18,
+                    // width: Get.width * 0.18,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
@@ -103,7 +103,9 @@ class AllLeaguesWidget extends StatelessWidget {
                           child: Text(
                             state,
                             style: TextStyle(
-                                color: Colors.white, fontSize: AppSizes.size12),
+                                color: Colors.white,
+                                fontSize: AppSizes.size12,
+                                overflow: TextOverflow.ellipsis),
                           ),
                         ),
                       ],
@@ -131,10 +133,10 @@ class AllLeaguesWidget extends StatelessWidget {
                           width: Get.width * 0.1,
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: NetworkImage(teamImage1))),
+                                  image: NetworkImage(teamImage2))),
                         ),
                         title: Text(
-                          teamName1,
+                          teamName2,
                           style: TextStyle(
                               fontSize: AppSizes.size13,
                               fontWeight: FontWeight.bold),

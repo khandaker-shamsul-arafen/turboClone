@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../consts/app_assets.dart';
 import '../../consts/app_colors.dart';
 import '../../consts/app_sizes.dart';
+import '../../controllers/fixture_details_controller.dart';
 import 'fixture_preview_tabbar.dart';
 import 'league_fixtures.dart';
 import 'league_overview.dart';
@@ -23,8 +24,8 @@ class FixturesDetailsScreen extends StatefulWidget {
 class _FixturesDetailsScreenState extends State<FixturesDetailsScreen>
     with TickerProviderStateMixin {
   TabController? _tabController;
+  //  Get.put(ControllerA());
 
-  @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);

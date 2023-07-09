@@ -68,6 +68,9 @@ class TeamSummaryWidget extends StatelessWidget {
           "9 MATCHES",
           style: TextStyle(color: Colors.grey, fontSize: AppSizes.size15),
         )),
+        SizedBox(
+          height: AppSizes.newSize(2),
+        ),
         Center(
           child: Container(
             width: Get.width * 0.4,
@@ -87,7 +90,7 @@ class TeamSummaryWidget extends StatelessWidget {
                             height: 1,
                             fontWeight: FontWeight.w600,
                             color: Colors.red,
-                            fontSize: AppSizes.size14),
+                            fontSize: AppSizes.size15),
                       ),
                       const Text(
                         "Wins",
@@ -110,7 +113,7 @@ class TeamSummaryWidget extends StatelessWidget {
                         "3",
                         style: TextStyle(
                             height: 1,
-                            fontSize: AppSizes.size14,
+                            fontSize: AppSizes.size15,
                             fontWeight: FontWeight.w600,
                             color: Colors.purple),
                       ),
@@ -133,7 +136,7 @@ class TeamSummaryWidget extends StatelessWidget {
                         style: TextStyle(
                           height: 1,
                           fontWeight: FontWeight.w600,
-                          fontSize: AppSizes.size14,
+                          fontSize: AppSizes.size15,
                         ),
                       ),
                       const Text(
