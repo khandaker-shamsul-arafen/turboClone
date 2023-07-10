@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:turbo_coone1/utils/helpers.dart';
 import 'package:turbo_coone1/views/screens/fixtures_details.dart';
 import 'package:turbo_coone1/views/screens/league_details.dart';
@@ -9,7 +11,8 @@ import 'package:turbo_coone1/views/screens/league_details.dart';
 import '../../consts/app_colors.dart';
 import '../../consts/app_sizes.dart';
 
-import '../../controllers/fixture_details_controller.dart';
+import '../../controllers/fixture_controller.dart';
+import '../../models/fixture_details.dart';
 import '../widgets/allLeaguesWidget.dart';
 import '../widgets/home_page_container.dart';
 import '../widgets/leagueNameWidget.dart';
@@ -27,17 +30,19 @@ class _FixtureScreenState extends State<FixtureScreen> {
   @override
   void initState() {
     super.initState();
-    fixturesController.loadScheudle();
+    fixturesController.loadScheudle(DateFormat("yyyy-MM-dd")
+        .format(fixturesController.selectedDate.value)
+        .toString());
   }
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Column(
-        children: [
-          Stack(
-            children: [
-              Container(
+    return Column(
+      children: [
+        Stack(
+          children: [
+            Obx(
+              () => Container(
                 width: Get.width,
                 height: AppSizes.newSize(12),
                 decoration: BoxDecoration(
@@ -56,32 +61,85 @@ class _FixtureScreenState extends State<FixtureScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const HomePageContainer(
-                        date: 'JUL 12',
-                        day: 'SUN',
+                      GestureDetector(
+                        onTap: () {
+                          fixturesController.selectedDate.value =
+                              fixturesController.selectedDate.value
+                                  .subtract(Duration(days: 1));
+
+                          fixturesController.loadScheudle(
+                              DateFormat("yyyy-MM-dd")
+                                  .format(fixturesController.selectedDate.value)
+                                  .toString());
+                          print(fixturesController.selectedDate.value);
+                        },
+                        child: HomePageContainer(
+                          date:
+                              '${DateFormat("MMMM").format(fixturesController.selectedDate.value.subtract(Duration(days: 1))).toString()}  ${DateFormat("d").format(fixturesController.selectedDate.value.subtract(Duration(days: 1))).toString()}',
+                          day: DateFormat("EEE")
+                              .format(fixturesController.selectedDate.value
+                                  .subtract(Duration(days: 1)))
+                              .toString(),
+                        ),
                       ),
                       SizedBox(
                         width: AppSizes.newSize(.8),
                       ),
-                      const HomePageContainer(
-                        date: 'JUL 13',
-                        day: 'TODAY',
-                        selected: true,
+                      GestureDetector(
+                        onTap: () {},
+                        child: HomePageContainer(
+                          date:
+                              '${DateFormat("MMMM").format(fixturesController.selectedDate.value).toString()}  ${DateFormat("d").format(fixturesController.selectedDate.value)}',
+                          day:
+                              '${DateFormat("EEE").format(fixturesController.selectedDate.value).toString()}',
+                          selected: true,
+                        ),
                       ),
                       SizedBox(
                         width: AppSizes.newSize(.8),
                       ),
-                      const HomePageContainer(
-                        date: 'JUL 4',
-                        day: 'TUE',
+                      GestureDetector(
+                        onTap: () {
+                          fixturesController.selectedDate.value =
+                              fixturesController.selectedDate.value
+                                  .add(Duration(days: 1));
+
+                          fixturesController.loadScheudle(
+                              DateFormat("yyyy-MM-dd")
+                                  .format(fixturesController.selectedDate.value)
+                                  .toString());
+                        },
+                        child: HomePageContainer(
+                          date:
+                              '${DateFormat("MMMM").format(fixturesController.selectedDate.value.add(Duration(days: 1))).toString()}  ${DateFormat("d").format(fixturesController.selectedDate.value.add(Duration(days: 1))).toString()}',
+                          day:
+                              '${DateFormat("EEE").format(fixturesController.selectedDate.value.add(Duration(days: 1))).toString()}',
+                        ),
                       ),
                       Spacer(),
                       Padding(
                         padding: EdgeInsets.only(bottom: AppSizes.newSize(1)),
-                        child: Icon(
-                          Icons.calendar_month_rounded,
-                          color: Colors.white,
-                          size: AppSizes.newSize(4),
+                        child: GestureDetector(
+                          onTap: () {
+                            datePicker(
+                              initialDate:
+                                  fixturesController.selectedDate.value,
+                              onChange: (DateTime date) {
+                                fixturesController.selectedDate.value = date;
+                                //  DateFormat("yyyy-MM-dd").format(DateTime.now()).toString()
+                                fixturesController.loadScheudle(DateFormat(
+                                        "yyyy-MM-dd")
+                                    .format(
+                                        fixturesController.selectedDate.value)
+                                    .toString());
+                              },
+                            );
+                          },
+                          child: Icon(
+                            Icons.calendar_month_rounded,
+                            color: Colors.white,
+                            size: AppSizes.newSize(4),
+                          ),
                         ),
                       ),
                       Padding(
@@ -96,29 +154,87 @@ class _FixtureScreenState extends State<FixtureScreen> {
                             borderRadius: BorderRadius.circular(35),
                             color: AppColors.dateContainerColor,
                           ),
-                          child: Center(
-                            child: ListTile(
-                              contentPadding: EdgeInsets.only(
-                                left: AppSizes.newSize(0.8),
-                                right: AppSizes.newSize(0.5),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton2<String>(
+                              isExpanded: true,
+                              hint: const Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'Select Item',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              dense: true,
-                              visualDensity:
-                                  VisualDensity(horizontal: -4, vertical: -4),
-                              leading: Text(
-                                "ALL LEAGUES",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: AppSizes.size14),
-                              ),
-                              trailing: Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: AppSizes.newSize(0)),
-                                child: Icon(
-                                  Icons.keyboard_arrow_down,
-                                  size: AppSizes.newSize(3),
-                                  color: Colors.white,
+                              items: fixturesController.group
+                                  .map(
+                                      (String item) => DropdownMenuItem<String>(
+                                            value: item,
+                                            child: Text(
+                                              item,
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ))
+                                  .toList(),
+                              value: fixturesController.selectedValue.value,
+                              onChanged: (String? value) {
+                                setState(() {
+                                  fixturesController.selectedValue.value =
+                                      value ?? "";
+                                });
+                              },
+                              buttonStyleData: ButtonStyleData(
+                                height: 50,
+                                width: 160,
+                                padding:
+                                    const EdgeInsets.only(left: 14, right: 14),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(14),
+                                  border: Border.all(
+                                    color: Colors.black26,
+                                  ),
+                                  color: Colors.transparent,
                                 ),
+                                elevation: 2,
+                              ),
+                              iconStyleData: const IconStyleData(
+                                icon: Icon(
+                                  Icons.arrow_forward_ios_outlined,
+                                ),
+                                iconSize: 14,
+                                iconEnabledColor: Colors.yellow,
+                                iconDisabledColor: Colors.grey,
+                              ),
+                              dropdownStyleData: DropdownStyleData(
+                                maxHeight: 200,
+                                width: 200,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(14),
+                                  color: Colors.redAccent,
+                                ),
+                                offset: const Offset(-20, 0),
+                                scrollbarTheme: ScrollbarThemeData(
+                                  radius: const Radius.circular(40),
+                                  thickness:
+                                      MaterialStateProperty.all<double>(6),
+                                  thumbVisibility:
+                                      MaterialStateProperty.all<bool>(true),
+                                ),
+                              ),
+                              menuItemStyleData: const MenuItemStyleData(
+                                height: 40,
+                                padding: EdgeInsets.only(left: 14, right: 14),
                               ),
                             ),
                           ),
@@ -128,103 +244,96 @@ class _FixtureScreenState extends State<FixtureScreen> {
                   ),
                 ),
               ),
-              Positioned(
-                top: AppSizes.newSize(-3),
-                left: AppSizes.newSize(6),
-                child: ClipPath(
-                  clipper: MyCustomClipper(),
-                  child: Container(
-                    height: AppSizes.newSize(7),
-                    width: AppSizes.newSize(8),
-                    color: Colors.white,
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: AppSizes.newSize(1)),
-                      child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Text(
-                            "LIVE",
-                            style: TextStyle(
-                                fontSize: AppSizes.size16,
-                                color: Colors.red,
-                                fontWeight: FontWeight.bold),
-                          )),
-                    ),
+            ),
+            Positioned(
+              top: AppSizes.newSize(-3),
+              left: AppSizes.newSize(6),
+              child: ClipPath(
+                clipper: MyCustomClipper(),
+                child: Container(
+                  height: AppSizes.newSize(7),
+                  width: AppSizes.newSize(8),
+                  color: Colors.white,
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: AppSizes.newSize(1)),
+                    child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Text(
+                          "LIVE",
+                          style: TextStyle(
+                              fontSize: AppSizes.size16,
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold),
+                        )),
                   ),
                 ),
-              )
-            ],
-          ),
-          Expanded(
-              child: ListView(
-            children: [
-              ...List.generate(
-                fixturesController.responseList.length,
-                (i) {
-                  //dd(fixturesController.response_model.toJson());
-                  return Column(
+              ),
+            )
+          ],
+        ),
+        Obx(() {
+          if (fixturesController.loading.value) {
+            return CircularProgressIndicator();
+          }
+          if (fixturesController.leagueGroup.isEmpty) {
+            return SizedBox();
+          }
+          //    dd(fixturesController.leagueGroup.length);
+          return Expanded(
+            child: ListView(
+              children: [
+                ...fixturesController.leagueGroup.entries.map(
+                  (entry) => Column(
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          Get.to(() => LeagueDetailsScreen());
-                        },
-                        child: LeagueNameWidget(
-                          ligueImage:
-                              "${fixturesController.responseList[i].league?.imagePath}",
-                          ligueText:
-                              "${fixturesController.responseList[i].league?.name}",
-                          ligueCountry:
-                              "${fixturesController.responseModel.value.data?[i].league?.country?.name}",
-                        ),
-                      ),
-                      ...List.generate(fixturesController.responseList.length,
-                          (i) {
-                        dd(fixturesController.responseList[i].scores);
+                      Builder(builder: (context) {
+                        dd(entry);
+                        dd(entry.value[0]);
+                        League? league = entry.value[0].league;
+
+                        //    return SizedBox();
                         return GestureDetector(
-                            onTap: () {
-                              Get.to(() => FixturesDetailsScreen());
-                            },
-                            child: (fixturesController
-                                            .responseList[i].scores ==
-                                        null ||
-                                    fixturesController
-                                        .responseList[i].scores!.isEmpty)
-                                ? AllLeaguesWidget(
-                                    teamImage1:
-                                        "${fixturesController.responseList[i].participants?[0].imagePath}",
-                                    teamImage2:
-                                        "${fixturesController.responseList[i].participants?[1].imagePath}",
-                                    teamName1:
-                                        "${fixturesController.responseList[i].participants?[0].name}",
-                                    teamName2:
-                                        "${fixturesController.responseList[i].participants?[1].name}",
-                                    state:
-                                        "${fixturesController.responseList[i].state?.state}",
-                                    score1: " ",
-                                    score2: "")
-                                : AllLeaguesWidget(
-                                    teamImage1:
-                                        "${fixturesController.responseList[i].participants?[0].imagePath}",
-                                    teamImage2:
-                                        "${fixturesController.responseList[i].participants?[1].imagePath}",
-                                    teamName1:
-                                        "${fixturesController.responseList[i].participants?[0].name}",
-                                    teamName2:
-                                        "${fixturesController.responseList[i].participants?[1].name}",
-                                    state:
-                                        "${fixturesController.responseList[i].state?.state}",
-                                    score1:
-                                        "${fixturesController.responseList[i].scores?[0].score?.goals}",
-                                    score2:
-                                        "${fixturesController.responseList[i].scores?[1].score?.goals}"));
+                          onTap: () {
+                            Get.to(() => LeagueDetailsScreen());
+                          },
+                          child: LeagueNameWidget(
+                            ligueImage: "${league?.imagePath}",
+                            ligueText: "${league?.name}",
+                            ligueCountry: "${league?.country?.name}",
+                          ),
+                        );
                       }),
+                      ...entry.value.map(
+                        (e) => GestureDetector(
+                          onTap: () {
+                            Get.to(() => FixturesDetailsScreen());
+                          },
+                          child: (e.scores == null || e.scores!.isEmpty)
+                              ? AllLeaguesWidget(
+                                  teamImage1: "${e.participants?[0].imagePath}",
+                                  teamImage2: "${e.participants?[1].imagePath}",
+                                  teamName1: "${e.participants?[0].name}",
+                                  teamName2: "${e.participants?[1].name}",
+                                  state: "${e.state?.state}",
+                                  score1: " ",
+                                  score2: "")
+                              : AllLeaguesWidget(
+                                  teamImage1: "${e.participants?[0].imagePath}",
+                                  teamImage2: "${e.participants?[1].imagePath}",
+                                  teamName1: "${e.participants?[0].name}",
+                                  teamName2: "${e.participants?[1].name}",
+                                  state: "${e.state?.state}",
+                                  score1: "${e.scores?[0].score?.goals}",
+                                  score2: "${e.scores?[1].score?.goals}"),
+                        ),
+                      )
                     ],
-                  );
-                },
-              )
-            ],
-          )),
-        ],
-      ),
+                  ),
+                )
+              ],
+            ),
+          );
+        })
+      ],
     );
   }
 }

@@ -75,7 +75,7 @@ class Data {
   int? startingAtTimestamp;
   League? league;
   List<Participants>? participants;
-  State? state;
+  Status? state;
   List<Scores>? scores;
 
   Data(
@@ -131,7 +131,7 @@ class Data {
         participants!.add(new Participants.fromJson(v));
       });
     }
-    state = json['state'] != null ? new State.fromJson(json['state']) : null;
+    state = json['state'] != null ? new Status.fromJson(json['state']) : null;
     if (json['scores'] != null) {
       scores = <Scores>[];
       json['scores'].forEach((v) {
@@ -391,16 +391,16 @@ class Meta {
   }
 }
 
-class State {
+class Status {
   int? id;
   String? state;
   String? name;
   String? shortName;
   String? developerName;
 
-  State({this.id, this.state, this.name, this.shortName, this.developerName});
+  Status({this.id, this.state, this.name, this.shortName, this.developerName});
 
-  State.fromJson(Map<String, dynamic> json) {
+  Status.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     state = json['state'];
     name = json['name'];
@@ -550,6 +550,13 @@ class Metadata {
   Metadata.fromJson(Map<String, dynamic> json) {
     trialEndsAt = json['trial_ends_at'];
     endsAt = json['ends_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['trial_ends_at'] = this.trialEndsAt;
+    data['ends_at'] = this.endsAt;
+    return data;
   }
 }
 

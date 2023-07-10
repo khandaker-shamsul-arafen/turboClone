@@ -6,7 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../consts/app_assets.dart';
 import '../../consts/app_colors.dart';
 import '../../consts/app_sizes.dart';
-import '../../controllers/fixture_details_controller.dart';
+import '../../controllers/fixture_controller.dart';
 import 'fixture_preview_tabbar.dart';
 import 'league_fixtures.dart';
 import 'league_overview.dart';
