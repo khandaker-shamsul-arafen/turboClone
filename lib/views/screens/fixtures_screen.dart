@@ -30,9 +30,8 @@ class _FixtureScreenState extends State<FixtureScreen> {
   @override
   void initState() {
     super.initState();
-    fixturesController.loadScheudle(DateFormat("yyyy-MM-dd")
-        .format(fixturesController.selectedDate.value)
-        .toString());
+    fixturesController.loadScheudle();
+    fixturesController.liveScheudle();
   }
 
   @override
@@ -63,15 +62,13 @@ class _FixtureScreenState extends State<FixtureScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          fixturesController.selectedDate.value =
-                              fixturesController.selectedDate.value
-                                  .subtract(Duration(days: 1));
-
-                          fixturesController.loadScheudle(
-                              DateFormat("yyyy-MM-dd")
-                                  .format(fixturesController.selectedDate.value)
-                                  .toString());
-                          print(fixturesController.selectedDate.value);
+                          if (!fixturesController.loading.value) {
+                            fixturesController.showLive.value = false;
+                            fixturesController.selectedDate.value =
+                                fixturesController.selectedDate.value
+                                    .subtract(Duration(days: 1));
+                            fixturesController.loadScheudle();
+                          }
                         },
                         child: HomePageContainer(
                           date:
@@ -89,7 +86,7 @@ class _FixtureScreenState extends State<FixtureScreen> {
                         onTap: () {},
                         child: HomePageContainer(
                           date:
-                              '${DateFormat("MMMM").format(fixturesController.selectedDate.value).toString()}  ${DateFormat("d").format(fixturesController.selectedDate.value)}',
+                              '${DateFormat("MMM").format(fixturesController.selectedDate.value).toString()}  ${DateFormat("d").format(fixturesController.selectedDate.value)}',
                           day:
                               '${DateFormat("EEE").format(fixturesController.selectedDate.value).toString()}',
                           selected: true,
@@ -100,14 +97,13 @@ class _FixtureScreenState extends State<FixtureScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          fixturesController.selectedDate.value =
-                              fixturesController.selectedDate.value
-                                  .add(Duration(days: 1));
-
-                          fixturesController.loadScheudle(
-                              DateFormat("yyyy-MM-dd")
-                                  .format(fixturesController.selectedDate.value)
-                                  .toString());
+                          if (!fixturesController.loading.value) {
+                            fixturesController.showLive.value = false;
+                            fixturesController.selectedDate.value =
+                                fixturesController.selectedDate.value
+                                    .add(Duration(days: 1));
+                            fixturesController.loadScheudle();
+                          }
                         },
                         child: HomePageContainer(
                           date:
@@ -121,17 +117,14 @@ class _FixtureScreenState extends State<FixtureScreen> {
                         padding: EdgeInsets.only(bottom: AppSizes.newSize(1)),
                         child: GestureDetector(
                           onTap: () {
+                            fixturesController.showLive.value = false;
                             datePicker(
                               initialDate:
                                   fixturesController.selectedDate.value,
                               onChange: (DateTime date) {
                                 fixturesController.selectedDate.value = date;
                                 //  DateFormat("yyyy-MM-dd").format(DateTime.now()).toString()
-                                fixturesController.loadScheudle(DateFormat(
-                                        "yyyy-MM-dd")
-                                    .format(
-                                        fixturesController.selectedDate.value)
-                                    .toString());
+                                fixturesController.loadScheudle();
                               },
                             );
                           },
@@ -189,10 +182,10 @@ class _FixtureScreenState extends State<FixtureScreen> {
                                   .toList(),
                               value: fixturesController.selectedValue.value,
                               onChanged: (String? value) {
-                                setState(() {
-                                  fixturesController.selectedValue.value =
-                                      value ?? "";
-                                });
+                                fixturesController
+                                    .getLeagueFixture(value ?? '');
+                                // fixturesController.selectedValue.value =
+                                //     value ?? "";
                               },
                               buttonStyleData: ButtonStyleData(
                                 height: 50,
@@ -204,16 +197,16 @@ class _FixtureScreenState extends State<FixtureScreen> {
                                   border: Border.all(
                                     color: Colors.black26,
                                   ),
-                                  color: Colors.transparent,
+                                  color: AppColors.dateContainerColor,
                                 ),
                                 elevation: 2,
                               ),
                               iconStyleData: const IconStyleData(
                                 icon: Icon(
-                                  Icons.arrow_forward_ios_outlined,
+                                  Icons.keyboard_arrow_down,
                                 ),
                                 iconSize: 14,
-                                iconEnabledColor: Colors.yellow,
+                                iconEnabledColor: Colors.white,
                                 iconDisabledColor: Colors.grey,
                               ),
                               dropdownStyleData: DropdownStyleData(
@@ -221,7 +214,7 @@ class _FixtureScreenState extends State<FixtureScreen> {
                                 width: 200,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(14),
-                                  color: Colors.redAccent,
+                                  color: AppColors.dateContainerColor,
                                 ),
                                 offset: const Offset(-20, 0),
                                 scrollbarTheme: ScrollbarThemeData(
@@ -248,23 +241,38 @@ class _FixtureScreenState extends State<FixtureScreen> {
             Positioned(
               top: AppSizes.newSize(-3),
               left: AppSizes.newSize(6),
-              child: ClipPath(
-                clipper: MyCustomClipper(),
-                child: Container(
-                  height: AppSizes.newSize(7),
-                  width: AppSizes.newSize(8),
-                  color: Colors.white,
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: AppSizes.newSize(1)),
-                    child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Text(
-                          "LIVE",
-                          style: TextStyle(
-                              fontSize: AppSizes.size16,
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold),
-                        )),
+              child: GestureDetector(
+                onTap: () {
+                  fixturesController.showLive.value =
+                      !fixturesController.showLive.value;
+                },
+                child: ClipPath(
+                  clipper: MyCustomClipper(),
+                  child: Obx(
+                    () => Container(
+                      height: AppSizes.newSize(7),
+                      width: AppSizes.newSize(8),
+                      color: (fixturesController.showLive.value)
+                          ? Colors.red
+                          : Colors.white,
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: AppSizes.newSize(1)),
+                        child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Text(
+                              "LIVE",
+                              style: (fixturesController.showLive.value)
+                                  ? TextStyle(
+                                      fontSize: AppSizes.size16,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold)
+                                  : TextStyle(
+                                      fontSize: AppSizes.size16,
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold),
+                            )),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -276,59 +284,151 @@ class _FixtureScreenState extends State<FixtureScreen> {
             return CircularProgressIndicator();
           }
           if (fixturesController.leagueGroup.isEmpty) {
-            return SizedBox();
+            return SizedBox(
+              child: Center(
+                child: Text("Abcd"),
+              ),
+            );
           }
-          //    dd(fixturesController.leagueGroup.length);
+          dd(fixturesController.showLive.value);
+
           return Expanded(
             child: ListView(
               children: [
-                ...fixturesController.leagueGroup.entries.map(
-                  (entry) => Column(
-                    children: [
-                      Builder(builder: (context) {
-                        dd(entry);
-                        dd(entry.value[0]);
-                        League? league = entry.value[0].league;
+                (fixturesController.showLive.value)
+                    ? Column(
+                        children: [
+                          ...fixturesController.selectedLeagueLive.entries.map(
+                            (entry) => Column(
+                              children: [
+                                Builder(builder: (context) {
+                                  League? league = entry.value.first.league;
 
-                        //    return SizedBox();
-                        return GestureDetector(
-                          onTap: () {
-                            Get.to(() => LeagueDetailsScreen());
-                          },
-                          child: LeagueNameWidget(
-                            ligueImage: "${league?.imagePath}",
-                            ligueText: "${league?.name}",
-                            ligueCountry: "${league?.country?.name}",
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => LeagueDetailsScreen());
+                                    },
+                                    child: LeagueNameWidget(
+                                      ligueImage: "${league?.imagePath}",
+                                      ligueText: "${league?.name}",
+                                      ligueCountry: "${league?.country?.name}",
+                                    ),
+                                  );
+                                }),
+                                ...entry.value.map(
+                                  (e) => GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => FixturesDetailsScreen());
+                                    },
+                                    child:
+                                        (e.scores == null || e.scores!.isEmpty)
+                                            ? AllLeaguesWidget(
+                                                teamImage1:
+                                                    "${e.participants?[0].imagePath}",
+                                                teamImage2:
+                                                    "${e.participants?[1].imagePath}",
+                                                teamName1:
+                                                    "${e.participants?[0].name}",
+                                                teamName2:
+                                                    "${e.participants?[1].name}",
+                                                state: "${e.periods?.length}",
+                                                goals: false,
+                                                time: DateFormat.Hm()
+                                                    .format(DateTime.parse(
+                                                        e.startingAt ?? ''))
+                                                    .toString(),
+                                              )
+                                            : AllLeaguesWidget(
+                                                teamImage1:
+                                                    "${e.participants?[0].imagePath}",
+                                                teamImage2:
+                                                    "${e.participants?[1].imagePath}",
+                                                teamName1:
+                                                    "${e.participants?[0].name}",
+                                                teamName2:
+                                                    "${e.participants?[1].name}",
+                                                state:
+                                                    "${e.periods?.firstWhere((i) => i.ticking == true).minutes}",
+                                                score1:
+                                                    "${e.scores?[0].score?.goals}",
+                                                score2:
+                                                    "${e.scores?[1].score?.goals}",
+                                                live: true,
+                                              ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                        );
-                      }),
-                      ...entry.value.map(
-                        (e) => GestureDetector(
-                          onTap: () {
-                            Get.to(() => FixturesDetailsScreen());
-                          },
-                          child: (e.scores == null || e.scores!.isEmpty)
-                              ? AllLeaguesWidget(
-                                  teamImage1: "${e.participants?[0].imagePath}",
-                                  teamImage2: "${e.participants?[1].imagePath}",
-                                  teamName1: "${e.participants?[0].name}",
-                                  teamName2: "${e.participants?[1].name}",
-                                  state: "${e.state?.state}",
-                                  score1: " ",
-                                  score2: "")
-                              : AllLeaguesWidget(
-                                  teamImage1: "${e.participants?[0].imagePath}",
-                                  teamImage2: "${e.participants?[1].imagePath}",
-                                  teamName1: "${e.participants?[0].name}",
-                                  teamName2: "${e.participants?[1].name}",
-                                  state: "${e.state?.state}",
-                                  score1: "${e.scores?[0].score?.goals}",
-                                  score2: "${e.scores?[1].score?.goals}"),
-                        ),
+                        ],
                       )
-                    ],
-                  ),
-                )
+                    : Column(
+                        children: [
+                          ...fixturesController.selectedLeague.entries.map(
+                            (entry) => Column(
+                              children: [
+                                Builder(builder: (context) {
+                                  //   dd(entry);
+                                  //dd(entry.value[0].league);
+                                  League? league = entry.value.first.league;
+                                  //dd("${league?.name}");
+                                  //  dd(league?.toJson());
+                                  //    return SizedBox();
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => LeagueDetailsScreen());
+                                    },
+                                    child: LeagueNameWidget(
+                                      ligueImage: "${league?.imagePath}",
+                                      ligueText: "${league?.name}",
+                                      ligueCountry: "${league?.country?.name}",
+                                    ),
+                                  );
+                                }),
+                                ...entry.value.map(
+                                  (e) => GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => FixturesDetailsScreen());
+                                    },
+                                    child: (e.scores == null ||
+                                            e.scores!.isEmpty)
+                                        ? AllLeaguesWidget(
+                                            teamImage1:
+                                                "${e.participants?[0].imagePath}",
+                                            teamImage2:
+                                                "${e.participants?[1].imagePath}",
+                                            teamName1:
+                                                "${e.participants?[0].name}",
+                                            teamName2:
+                                                "${e.participants?[1].name}",
+                                            state: "${e.state?.shortName}",
+                                            goals: false,
+                                            time: DateFormat.Hm()
+                                                .format(DateTime.parse(
+                                                    e.startingAt ?? ''))
+                                                .toString(),
+                                          )
+                                        : AllLeaguesWidget(
+                                            teamImage1:
+                                                "${e.participants?[0].imagePath}",
+                                            teamImage2:
+                                                "${e.participants?[1].imagePath}",
+                                            teamName1:
+                                                "${e.participants?[0].name}",
+                                            teamName2:
+                                                "${e.participants?[1].name}",
+                                            state: "${e.state?.shortName}",
+                                            score1:
+                                                "${e.scores?[0].score?.goals}",
+                                            score2:
+                                                "${e.scores?[1].score?.goals}"),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
               ],
             ),
           );

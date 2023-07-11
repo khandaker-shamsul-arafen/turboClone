@@ -13,6 +13,9 @@ class AllLeaguesWidget extends StatelessWidget {
   final String state;
   final String score1;
   final String score2;
+  final String time;
+  final bool live;
+  final bool goals;
   final bool recentMatches;
 
   const AllLeaguesWidget({
@@ -22,8 +25,11 @@ class AllLeaguesWidget extends StatelessWidget {
     required this.teamName1,
     required this.teamName2,
     required this.state,
-    required this.score1,
-    required this.score2,
+    this.score1 = "",
+    this.score2 = "",
+    this.time = '',
+    this.live = false,
+    this.goals = true,
     this.recentMatches = false,
   });
 
@@ -93,17 +99,28 @@ class AllLeaguesWidget extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text(
-                          "$score1 - $score2",
-                          style: TextStyle(
-                              color: Colors.white, fontSize: AppSizes.size18),
+                        Visibility(
+                          visible: goals,
+                          child: Text(
+                            "$score1 - $score2",
+                            style: TextStyle(
+                                color: Colors.white, fontSize: AppSizes.size18),
+                          ),
+                        ),
+                        Visibility(
+                          visible: goals == false,
+                          child: Text(
+                            "$time",
+                            style: TextStyle(
+                                color: Colors.white, fontSize: AppSizes.size18),
+                          ),
                         ),
                         Container(
                           color: AppColors.dateContainerColor,
                           child: Text(
                             state,
                             style: TextStyle(
-                                color: Colors.white,
+                                color: (live) ? Colors.red : Colors.white,
                                 fontSize: AppSizes.size12,
                                 overflow: TextOverflow.ellipsis),
                           ),

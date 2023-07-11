@@ -7,7 +7,7 @@ class ApiService {
   static final http.Client _client = http.Client();
 
   ApiService() {
-    dd('ApiService Init');
+    //dd('ApiService Init');
   }
 
   static Future<http.Response> get(

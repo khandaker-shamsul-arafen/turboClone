@@ -32,7 +32,6 @@ class TeamOverViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    dd(buttonIndex);
     return Container(
       height: AppSizes.newSize(5),
       color: Colors.white,

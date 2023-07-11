@@ -86,11 +86,11 @@ class SettingController extends GetxController {
 
     appInfo.value = packageInfo;
 
-    dd(appopenPlacementId.value);
-    dd(bannerPlacementId.value);
-    dd(interstitialPlacementId.value);
-    dd(nativePlacementId.value);
-    dd(appInfo.value);
+    // dd(appopenPlacementId.value);
+    // dd(bannerPlacementId.value);
+    // dd(interstitialPlacementId.value);
+    // dd(nativePlacementId.value);
+    // dd(appInfo.value);
   }
 
   bool showAd() {
