@@ -4,18 +4,18 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:turbo_coone1/utils/helpers.dart';
-import 'package:turbo_coone1/views/screens/fixtures_details.dart';
-import 'package:turbo_coone1/views/screens/league_details.dart';
+import '/utils/helpers.dart';
+import '/views/screens/fixtures_details.dart';
+import '/views/screens/league_details.dart';
 
 import '../../consts/app_colors.dart';
 import '../../consts/app_sizes.dart';
 
 import '../../controllers/fixture_controller.dart';
 import '../../models/fixture_details.dart';
-import '../widgets/allLeaguesWidget.dart';
+import '../widgets/all_leagues_widget.dart';
 import '../widgets/home_page_container.dart';
-import '../widgets/leagueNameWidget.dart';
+import '../widgets/league_name_widget.dart';
 
 class FixtureScreen extends StatefulWidget {
   const FixtureScreen({super.key});
@@ -87,8 +87,9 @@ class _FixtureScreenState extends State<FixtureScreen> {
                         child: HomePageContainer(
                           date:
                               '${DateFormat("MMM").format(fixturesController.selectedDate.value).toString()}  ${DateFormat("d").format(fixturesController.selectedDate.value)}',
-                          day:
-                              '${DateFormat("EEE").format(fixturesController.selectedDate.value).toString()}',
+                          day: DateFormat("EEE")
+                              .format(fixturesController.selectedDate.value)
+                              .toString(),
                           selected: true,
                         ),
                       ),
@@ -108,8 +109,10 @@ class _FixtureScreenState extends State<FixtureScreen> {
                         child: HomePageContainer(
                           date:
                               '${DateFormat("MMMM").format(fixturesController.selectedDate.value.add(Duration(days: 1))).toString()}  ${DateFormat("d").format(fixturesController.selectedDate.value.add(Duration(days: 1))).toString()}',
-                          day:
-                              '${DateFormat("EEE").format(fixturesController.selectedDate.value.add(Duration(days: 1))).toString()}',
+                          day: DateFormat("EEE")
+                              .format(fixturesController.selectedDate.value
+                                  .add(Duration(days: 1)))
+                              .toString(),
                         ),
                       ),
                       Spacer(),
@@ -286,7 +289,7 @@ class _FixtureScreenState extends State<FixtureScreen> {
           if (fixturesController.leagueGroup.isEmpty) {
             return SizedBox(
               child: Center(
-                child: Text("Abcd"),
+                child: Text(""),
               ),
             );
           }
@@ -296,32 +299,43 @@ class _FixtureScreenState extends State<FixtureScreen> {
             child: ListView(
               children: [
                 (fixturesController.showLive.value)
-                    ? Column(
-                        children: [
-                          ...fixturesController.selectedLeagueLive.entries.map(
-                            (entry) => Column(
-                              children: [
-                                Builder(builder: (context) {
-                                  League? league = entry.value.first.league;
+                    ? (fixturesController.selectedLeagueLive.isEmpty)
+                        ? Center(child: Text('No Live Match'))
+                        : Column(
+                            children: [
+                              ...fixturesController.selectedLeagueLive.entries
+                                  .map(
+                                (entry) => Column(
+                                  children: [
+                                    Builder(builder: (context) {
+                                      League? league = entry.value.first.league;
 
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => LeagueDetailsScreen());
-                                    },
-                                    child: LeagueNameWidget(
-                                      ligueImage: "${league?.imagePath}",
-                                      ligueText: "${league?.name}",
-                                      ligueCountry: "${league?.country?.name}",
-                                    ),
-                                  );
-                                }),
-                                ...entry.value.map(
-                                  (e) => GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => FixturesDetailsScreen());
-                                    },
-                                    child:
-                                        (e.scores == null || e.scores!.isEmpty)
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Get.to(() => LeagueDetailsScreen(
+                                                leagueId: league?.id ?? 0,
+                                                imagePath:
+                                                    league?.imagePath ?? '',
+                                                leagueCountry:
+                                                    league?.country?.name ?? '',
+                                                leagueName: league?.name ?? '',
+                                              ));
+                                        },
+                                        child: LeagueNameWidget(
+                                          ligueImage: "${league?.imagePath}",
+                                          ligueText: "${league?.name}",
+                                          ligueCountry:
+                                              "${league?.country?.name}",
+                                        ),
+                                      );
+                                    }),
+                                    ...entry.value.map(
+                                      (e) => GestureDetector(
+                                        onTap: () {
+                                          Get.to(() => FixturesDetailsScreen());
+                                        },
+                                        child: (e.scores == null ||
+                                                e.scores!.isEmpty)
                                             ? AllLeaguesWidget(
                                                 teamImage1:
                                                     "${e.participants?[0].imagePath}",
@@ -331,12 +345,13 @@ class _FixtureScreenState extends State<FixtureScreen> {
                                                     "${e.participants?[0].name}",
                                                 teamName2:
                                                     "${e.participants?[1].name}",
-                                                state: "${e.periods?.length}",
+                                                state: "${e.state?.shortName}",
                                                 goals: false,
-                                                time: DateFormat.Hm()
-                                                    .format(DateTime.parse(
-                                                        e.startingAt ?? ''))
-                                                    .toString(),
+                                                time: DateFormat.Hm().format(DateTime
+                                                    .fromMillisecondsSinceEpoch(
+                                                        (e.startingAtTimestamp ??
+                                                                0) *
+                                                            1000)),
                                               )
                                             : AllLeaguesWidget(
                                                 teamImage1:
@@ -348,20 +363,20 @@ class _FixtureScreenState extends State<FixtureScreen> {
                                                 teamName2:
                                                     "${e.participants?[1].name}",
                                                 state:
-                                                    "${e.periods?.firstWhere((i) => i.ticking == true).minutes}",
+                                                    "${e.periods?.firstWhereOrNull((i) => i.ticking == true)?.minutes ?? '-'}",
                                                 score1:
                                                     "${e.scores?[0].score?.goals}",
                                                 score2:
                                                     "${e.scores?[1].score?.goals}",
                                                 live: true,
                                               ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      )
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
                     : Column(
                         children: [
                           ...fixturesController.selectedLeague.entries.map(
@@ -376,7 +391,13 @@ class _FixtureScreenState extends State<FixtureScreen> {
                                   //    return SizedBox();
                                   return GestureDetector(
                                     onTap: () {
-                                      Get.to(() => LeagueDetailsScreen());
+                                      Get.to(() => LeagueDetailsScreen(
+                                            leagueId: league?.id ?? 0,
+                                            imagePath: league?.imagePath ?? '',
+                                            leagueCountry:
+                                                league?.country?.name ?? '',
+                                            leagueName: league?.name ?? '',
+                                          ));
                                     },
                                     child: LeagueNameWidget(
                                       ligueImage: "${league?.imagePath}",
@@ -403,10 +424,11 @@ class _FixtureScreenState extends State<FixtureScreen> {
                                                 "${e.participants?[1].name}",
                                             state: "${e.state?.shortName}",
                                             goals: false,
-                                            time: DateFormat.Hm()
-                                                .format(DateTime.parse(
-                                                    e.startingAt ?? ''))
-                                                .toString(),
+                                            time: DateFormat.Hm().format(DateTime
+                                                .fromMillisecondsSinceEpoch(
+                                                    (e.startingAtTimestamp ??
+                                                            0) *
+                                                        1000)),
                                           )
                                         : AllLeaguesWidget(
                                             teamImage1:

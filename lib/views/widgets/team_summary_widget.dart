@@ -1,10 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:turbo_coone1/consts/consts.dart';
-
-import '../../consts/app_sizes.dart';
+import '/consts/consts.dart';
 
 class TeamSummaryWidget extends StatelessWidget {
   const TeamSummaryWidget({super.key});
@@ -30,12 +27,10 @@ class TeamSummaryWidget extends StatelessWidget {
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
               Expanded(
-                child: Container(
-                  child: Image.asset(
-                    AppAssets.divideBar,
-                    height: AppSizes.newSize(1),
-                    color: Colors.black,
-                  ),
+                child: Image.asset(
+                  AppAssets.divideBar,
+                  height: AppSizes.newSize(1),
+                  color: Colors.black,
                 ),
               ),
               const Text(
@@ -43,12 +38,10 @@ class TeamSummaryWidget extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.w700),
               ),
               Expanded(
-                child: Container(
-                  child: Image.asset(
-                    AppAssets.divideBar,
-                    height: AppSizes.newSize(1),
-                    color: Colors.black,
-                  ),
+                child: Image.asset(
+                  AppAssets.divideBar,
+                  height: AppSizes.newSize(1),
+                  color: Colors.black,
                 ),
               ),
               CachedNetworkImage(
@@ -72,7 +65,7 @@ class TeamSummaryWidget extends StatelessWidget {
           height: AppSizes.newSize(2),
         ),
         Center(
-          child: Container(
+          child: SizedBox(
             width: Get.width * 0.4,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,

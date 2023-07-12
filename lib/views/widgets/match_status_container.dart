@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 import '../../consts/app_sizes.dart';
@@ -43,13 +41,13 @@ class MatchStatusContainer extends StatelessWidget {
             ),
             (ptStats)
                 ? GestureDetector(
-                    child: Icon(Icons.keyboard_arrow_right),
                     onTap: onTap,
+                    child: const Icon(Icons.keyboard_arrow_right),
                   )
                 : Text(
                     "Season",
                     style: TextStyle(
-                        fontSize: AppSizes.size15, fontWeight: FontWeight.bold),
+                        fontSize: AppSizes.size15, fontWeight: FontWeight.w500),
                   )
           ],
         ),

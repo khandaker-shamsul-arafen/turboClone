@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:turbo_coone1/consts/consts.dart';
-
-import 'match_status_container.dart';
+import '/consts/consts.dart';
 
 class TopScorerWidget extends StatelessWidget {
   final String playerName;

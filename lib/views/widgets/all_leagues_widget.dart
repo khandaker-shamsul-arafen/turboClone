@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:turbo_coone1/consts/consts.dart';
-
-import '../../consts/app_widget.dart';
+import '/consts/consts.dart';
 
 class AllLeaguesWidget extends StatelessWidget {
   final String teamImage1;
@@ -110,7 +108,7 @@ class AllLeaguesWidget extends StatelessWidget {
                         Visibility(
                           visible: goals == false,
                           child: Text(
-                            "$time",
+                            time,
                             style: TextStyle(
                                 color: Colors.white, fontSize: AppSizes.size18),
                           ),
@@ -141,7 +139,7 @@ class AllLeaguesWidget extends StatelessWidget {
                     child: Center(
                       child: ListTile(
                         visualDensity:
-                            VisualDensity(horizontal: -4, vertical: -4),
+                            const VisualDensity(horizontal: -4, vertical: -4),
                         dense: true,
                         contentPadding: EdgeInsets.only(
                             left: AppSizes.newSize(1.6), right: 0.0),

@@ -28,12 +28,10 @@ class VenueContainerWidget extends StatelessWidget {
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
               Expanded(
-                child: Container(
-                  child: Image.asset(
-                    AppAssets.divideBar,
-                    height: AppSizes.newSize(1),
-                    color: Colors.black,
-                  ),
+                child: Image.asset(
+                  AppAssets.divideBar,
+                  height: AppSizes.newSize(1),
+                  color: Colors.black,
                 ),
               ),
               Text(
@@ -42,12 +40,10 @@ class VenueContainerWidget extends StatelessWidget {
                     fontWeight: FontWeight.w700, fontSize: AppSizes.size12),
               ),
               Expanded(
-                child: Container(
-                  child: Image.asset(
-                    AppAssets.divideBar,
-                    height: AppSizes.newSize(1),
-                    color: Colors.black,
-                  ),
+                child: Image.asset(
+                  AppAssets.divideBar,
+                  height: AppSizes.newSize(1),
+                  color: Colors.black,
                 ),
               ),
               CachedNetworkImage(
@@ -153,17 +149,13 @@ class VenueContainerWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      //padding: EdgeInsets.only(right: 5),
-                      //width: 130,
-                      child: Text(
-                        "Wiklof Holding ergergeg",
-                        style: TextStyle(
-                            height: 1.7,
-                            fontSize: AppSizes.size13,
-                            fontWeight: FontWeight.w600,
-                            overflow: TextOverflow.ellipsis),
-                      ),
+                    Text(
+                      "Wiklof Holding ergergeg",
+                      style: TextStyle(
+                          height: 1.7,
+                          fontSize: AppSizes.size13,
+                          fontWeight: FontWeight.w600,
+                          overflow: TextOverflow.ellipsis),
                     ),
                     Text(
                       "1650",

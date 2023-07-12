@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import '/consts/consts.dart';
 
-import '../../consts/app_assets.dart';
-import '../../consts/app_colors.dart';
-import '../../consts/app_sizes.dart';
 import '../widgets/pt_stats_widget.dart';
 
 class TopScorers extends StatelessWidget {
@@ -43,7 +41,7 @@ class TopScorers extends StatelessWidget {
               ),
             ),
           ),
-          title: Text("TOP SCORERS"),
+          title: const Text("TOP SCORERS"),
           centerTitle: true,
         ),
         body: Column(
@@ -53,6 +51,7 @@ class TopScorers extends StatelessWidget {
               color: Colors.white,
               child: ListView(
                 children: [
+                  10.0.spaceY,
                   ...List.generate(
                       50,
                       (index) => Padding(

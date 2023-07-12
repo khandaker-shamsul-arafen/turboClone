@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:turbo_coone1/views/screens/top_scores.dart';
+import '/consts/consts.dart';
+import '/views/screens/top_scores.dart';
 
-import '../../consts/app_assets.dart';
-import '../../consts/app_colors.dart';
-import '../../consts/app_sizes.dart';
 import '../widgets/match_status_container.dart';
 import '../widgets/pt_stats_widget.dart';
 
@@ -31,7 +29,7 @@ class LeaguePlayerStats extends StatelessWidget {
                           matchStatus: 'TOP SCORERS',
                           ptStats: true,
                           onTap: () {
-                            Get.to(() => TopScorers());
+                            Get.to(() => const TopScorers());
                           },
                         ),
                         Container(

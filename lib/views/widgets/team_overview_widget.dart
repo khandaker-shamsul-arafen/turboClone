@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../consts/app_sizes.dart';
-import '../../utils/helpers.dart';
-import 'card_clipper.dart';
 
 class TeamOverViewWidget extends StatelessWidget {
   final int number;

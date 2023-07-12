@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../consts/app_colors.dart';
 import '../../consts/app_sizes.dart';
-import '../../consts/app_styles.dart';
 
 class OverviewHeaderContainer extends StatelessWidget {
   final int buttonIndex;

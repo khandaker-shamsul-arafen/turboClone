@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:turbo_coone1/consts/app_sizes.dart';
+import '/consts/app_sizes.dart';
 
 class AppWidgets {
   Widget gapH(

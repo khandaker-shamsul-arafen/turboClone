@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:turbo_coone1/utils/helpers.dart';
-import 'package:turbo_coone1/views/widgets/card_clipper.dart';
 
 import '../../consts/app_colors.dart';
 import '../../consts/app_sizes.dart';

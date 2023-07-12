@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:turbo_coone1/views/screens/top_scores.dart';
+import '/views/screens/top_scores.dart';
 
 import '../../consts/app_assets.dart';
 import '../../consts/app_colors.dart';

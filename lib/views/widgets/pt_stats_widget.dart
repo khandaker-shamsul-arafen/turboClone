@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../consts/app_colors.dart';
 import '../../consts/app_sizes.dart';
 
 class PtStatsWidget extends StatelessWidget {

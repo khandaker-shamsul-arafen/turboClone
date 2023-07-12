@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:turbo_coone1/consts/consts.dart';
+import '/consts/consts.dart';
 
 class WeatherReportWidget extends StatelessWidget {
   const WeatherReportWidget({super.key});

@@ -4,26 +4,30 @@ import 'package:collection/collection.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import 'package:turbo_coone1/services/api_services.dart';
-import 'package:turbo_coone1/utils/helpers.dart';
+import '/services/api_services.dart';
+import '/utils/helpers.dart';
 
 import '../models/fixture_details.dart';
 
 class FixtureController extends GetxController {
   //  RxList<FixturesData> liveScores = <FixturesData>[].obs;
   // RxList<FixturesData> fixturesbyDate = <FixturesData>[].obs;
-  RxList<Data> responseList = <Data>[].obs;
-  RxList<Data> liveResponseList = <Data>[].obs;
+  RxList<FixtureData> responseList = <FixtureData>[].obs;
+  RxList<FixtureData> liveResponseList = <FixtureData>[].obs;
   Rx<FixtureDetailsResponse> responseModel = FixtureDetailsResponse().obs;
 
   Rx<FixtureDetailsResponse> liveModel = FixtureDetailsResponse().obs;
 
   Rx<DateTime> selectedDate = DateTime.now().toUtc().obs;
-  Map<String, List<Data>> leagueGroup = <String, List<Data>>{}.obs;
-  Map<String, List<Data>> leagueGroupLive = <String, List<Data>>{}.obs;
-  Map<String, List<Data>> selectedLeague = <String, List<Data>>{}.obs;
-  Map<String, List<Data>> selectedLeagueLive = <String, List<Data>>{}.obs;
-  Map<int, List<Data>> leagueGroupKey = <int, List<Data>>{}.obs;
+  Map<String, List<FixtureData>> leagueGroup =
+      <String, List<FixtureData>>{}.obs;
+  Map<String, List<FixtureData>> leagueGroupLive =
+      <String, List<FixtureData>>{}.obs;
+  Map<String, List<FixtureData>> selectedLeague =
+      <String, List<FixtureData>>{}.obs;
+  Map<String, List<FixtureData>> selectedLeagueLive =
+      <String, List<FixtureData>>{}.obs;
+  Map<int, List<FixtureData>> leagueGroupKey = <int, List<FixtureData>>{}.obs;
 
   RxBool loading = true.obs;
   RxBool loadingLive = true.obs;
@@ -137,7 +141,6 @@ class FixtureController extends GetxController {
     } on Exception catch (e) {
       dd(e);
     } finally {
-      // TODO
       loadingLive.value = false;
     }
   }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:turbo_coone1/consts/app_colors.dart';
+import '/consts/app_colors.dart';
 
 import '../../consts/app_assets.dart';
 import '../../consts/app_sizes.dart';
+import '../../controllers/league_details_controller.dart';
 import 'league_fixtures.dart';
 import 'league_overview.dart';
 import 'league_playerstats.dart';
@@ -13,7 +13,16 @@ import 'league_table.dart';
 import 'league_teams.dart';
 
 class LeagueDetailsScreen extends StatefulWidget {
-  const LeagueDetailsScreen({super.key});
+  final int leagueId;
+  final String imagePath;
+  final String leagueName;
+  final String leagueCountry;
+  const LeagueDetailsScreen(
+      {super.key,
+      required this.leagueId,
+      required this.imagePath,
+      required this.leagueName,
+      required this.leagueCountry});
 
   @override
   State<LeagueDetailsScreen> createState() => _LeagueDetailsScreenState();
@@ -22,11 +31,13 @@ class LeagueDetailsScreen extends StatefulWidget {
 class _LeagueDetailsScreenState extends State<LeagueDetailsScreen>
     with TickerProviderStateMixin {
   TabController? _tabController;
-
+  LeagueDetailsController leagueDatailscontroller =
+      Get.put(LeagueDetailsController());
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 5, vsync: this);
+    leagueDatailscontroller.recentMatches(widget.leagueId);
   }
 
   @override
@@ -82,31 +93,33 @@ class _LeagueDetailsScreenState extends State<LeagueDetailsScreen>
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  height: AppSizes.newSize(8),
-                  width: AppSizes.newSize(8),
-                  decoration: const BoxDecoration(
+                  margin: EdgeInsets.only(left: AppSizes.newSize(1)),
+                  height: AppSizes.newSize(5),
+                  width: AppSizes.newSize(5),
+                  decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                          image: NetworkImage(
-                              "https://cdn.sportmonks.com/images/soccer/leagues/1/609.png"))),
+                          image: NetworkImage(widget.imagePath))),
                 ),
                 SizedBox(
                   width: AppSizes.newSize(1),
                 ),
                 Expanded(
+                  flex: 2,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "LIGA MX",
+                        widget.leagueName,
                         style: TextStyle(
-                            fontSize: AppSizes.size16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            height: 1),
+                          fontSize: AppSizes.size16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          height: 1,
+                        ),
                       ),
-                      Text("MEXICO",
+                      Text(widget.leagueCountry,
                           style: TextStyle(
                               fontSize: AppSizes.size14,
                               fontWeight: FontWeight.normal,

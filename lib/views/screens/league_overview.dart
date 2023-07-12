@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:turbo_coone1/consts/consts.dart';
+import 'package:intl/intl.dart';
+import '/consts/consts.dart';
 
-import '../../consts/app_colors.dart';
-import '../../consts/app_sizes.dart';
-import '../widgets/allLeaguesWidget.dart';
+import '../../controllers/league_details_controller.dart';
+import '../widgets/all_leagues_widget.dart';
 import '../widgets/match_status_container.dart';
 import '../widgets/overview_header_container.dart';
 import '../widgets/team_overview_widget.dart';
@@ -20,6 +19,7 @@ class LeagueOverview extends StatefulWidget {
 }
 
 class _LeagueOverviewState extends State<LeagueOverview> {
+  LeagueDetailsController leagueDetailsController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,42 +48,56 @@ class _LeagueOverviewState extends State<LeagueOverview> {
             ),
             Column(
               children: [
-                ...List.generate(2, (index) {
-                  return Column(
+                Obx(
+                  () => Column(
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          Get.to(() => const FixturesDetailsScreen());
-                        },
-                        child: const AllLeaguesWidget(
-                            teamImage1:
-                                "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
-                            teamImage2:
-                                "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
-                            teamName1: "Al Naser",
-                            teamName2: "Miami",
-                            state: " NS",
-                            score1: "0",
-                            score2: "1"),
-                      ),
-                      Container(
-                        height: AppSizes.newSize(2),
-                        width: Get.width,
-                        color: Colors.white,
-                      )
+                      ...leagueDetailsController.upComingList
+                          .map(
+                            (element) => Column(
+                              children: [
+                                AllLeaguesWidget(
+                                  teamImage1: element.participants?[0].imagePath
+                                          .toString() ??
+                                      "'",
+                                  teamImage2: element.participants?[1].imagePath
+                                          .toString() ??
+                                      '',
+                                  teamName1: element.participants?[0].name
+                                          .toString() ??
+                                      "",
+                                  teamName2: element.participants?[1].name
+                                          .toString() ??
+                                      "",
+                                  state:
+                                      element.state?.shortName.toString() ?? "",
+                                  time: DateFormat.Hm()
+                                      .format(DateTime.parse(
+                                          element.startingAt ?? ''))
+                                      .toString(),
+                                  goals: false,
+                                ),
+                                Container(
+                                  height: AppSizes.newSize(1),
+                                  width: Get.width,
+                                  color: Colors.white,
+                                )
+                              ],
+                            ),
+                          )
+                          .take(3),
                     ],
-                  );
-                })
+                  ),
+                )
               ],
             ),
             Column(children: [
               const MatchStatusContainer(
                 matchStatus: 'RECENT MATCHES',
-                season: '2023',
+                season: '2023/2024',
               ),
               Container(
                 color: Colors.white,
-                height: AppSizes.newSize(2),
+                height: AppSizes.newSize(1),
                 child: Padding(
                   padding: EdgeInsets.only(bottom: AppSizes.newSize(0.5)),
                   child: Image.asset(
@@ -93,25 +107,49 @@ class _LeagueOverviewState extends State<LeagueOverview> {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  Get.to(() => const FixturesDetailsScreen());
-                },
-                child: const AllLeaguesWidget(
-                    teamImage1:
-                        "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
-                    teamImage2:
-                        "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
-                    teamName1: "Al Naser",
-                    teamName2: "Miami",
-                    state: " NS",
-                    score1: "0",
-                    score2: "1"),
-              ),
-              Container(
-                height: AppSizes.newSize(2),
-                width: Get.width,
-                color: Colors.white,
-              )
+                  onTap: () {
+                    Get.to(() => const FixturesDetailsScreen());
+                  },
+                  child: Obx(
+                    () => Column(
+                      children: [
+                        ...leagueDetailsController.latestList
+                            .map(
+                              (element) => Column(
+                                children: [
+                                  AllLeaguesWidget(
+                                      teamImage1:
+                                          element.participants?[0].imagePath ??
+                                              "'",
+                                      teamImage2: element
+                                              .participants?[1].imagePath
+                                              .toString() ??
+                                          '',
+                                      teamName1: element.participants?[0].name
+                                              .toString() ??
+                                          "",
+                                      teamName2: element.participants?[1].name
+                                              .toString() ??
+                                          "",
+                                      state:
+                                          element.state?.shortName.toString() ??
+                                              "",
+                                      score1:
+                                          "${(element.participants?[0].id == element.scores?[1].participantId) ? (element.scores?[1].score?.goals) : '0'}",
+                                      score2:
+                                          "${(element.participants?[1].id == element.scores?[1].participantId) ? (element.scores?[3].score?.goals) : '0'}"),
+                                  Container(
+                                    height: AppSizes.newSize(1),
+                                    width: Get.width,
+                                    color: Colors.white,
+                                  )
+                                ],
+                              ),
+                            )
+                            .take(3)
+                      ],
+                    ),
+                  )),
             ]),
             SizedBox(
               height: AppSizes.newSize(1),

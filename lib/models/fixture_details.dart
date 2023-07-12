@@ -1,5 +1,5 @@
 class FixtureDetailsResponse {
-  List<Data>? data;
+  List<FixtureData>? data;
   Pagination? pagination;
   List<Subscription>? subscription;
   RateLimit? rateLimit;
@@ -14,9 +14,9 @@ class FixtureDetailsResponse {
 
   FixtureDetailsResponse.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <FixtureData>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(FixtureData.fromJson(v));
       });
     }
     pagination = json['pagination'] != null
@@ -53,7 +53,7 @@ class FixtureDetailsResponse {
   }
 }
 
-class Data {
+class FixtureData {
   int? id;
   int? sportId;
   int? leagueId;
@@ -79,7 +79,7 @@ class Data {
   List<Scores>? scores;
   List<Periods>? periods;
 
-  Data(
+  FixtureData(
       {this.id,
       this.sportId,
       this.leagueId,
@@ -105,7 +105,7 @@ class Data {
       this.scores,
       this.periods});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  FixtureData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     sportId = json['sport_id'];
     leagueId = json['league_id'];
@@ -142,7 +142,7 @@ class Data {
     if (json['periods'] != null) {
       periods = <Periods>[];
       json['periods'].forEach((v) {
-        periods!.add(new Periods.fromJson(v));
+        periods!.add(Periods.fromJson(v));
       });
     }
   }
@@ -180,8 +180,8 @@ class Data {
     if (scores != null) {
       data['scores'] = scores!.map((v) => v.toJson()).toList();
     }
-    if (this.periods != null) {
-      data['periods'] = this.periods!.map((v) => v.toJson()).toList();
+    if (periods != null) {
+      data['periods'] = periods!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -534,20 +534,20 @@ class Periods {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['fixture_id'] = this.fixtureId;
-    data['type_id'] = this.typeId;
-    data['started'] = this.started;
-    data['ended'] = this.ended;
-    data['counts_from'] = this.countsFrom;
-    data['ticking'] = this.ticking;
-    data['sort_order'] = this.sortOrder;
-    data['description'] = this.description;
-    data['time_added'] = this.timeAdded;
-    data['period_length'] = this.periodLength;
-    data['minutes'] = this.minutes;
-    data['seconds'] = this.seconds;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['fixture_id'] = fixtureId;
+    data['type_id'] = typeId;
+    data['started'] = started;
+    data['ended'] = ended;
+    data['counts_from'] = countsFrom;
+    data['ticking'] = ticking;
+    data['sort_order'] = sortOrder;
+    data['description'] = description;
+    data['time_added'] = timeAdded;
+    data['period_length'] = periodLength;
+    data['minutes'] = minutes;
+    data['seconds'] = seconds;
     return data;
   }
 }
@@ -588,8 +588,8 @@ class Pagination {
 class Subscription {
   Meta? meta;
   List<Plans>? plans;
-  List<Null>? addOns;
-  List<Null>? widgets;
+  List<void>? addOns;
+  List<void>? widgets;
 
   Subscription({this.meta, this.plans, this.addOns, this.widgets});
 

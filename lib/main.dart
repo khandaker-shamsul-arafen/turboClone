@@ -3,10 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:turbo_coone1/views/screens/parent_screen.dart';
+import '/views/screens/parent_screen.dart';
 import '/consts/consts.dart';
 import '/controllers/setting_controller.dart';
-import '/views/screens/splash_screen.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();

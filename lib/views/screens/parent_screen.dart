@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:turbo_coone1/views/drawer/app_drawer.dart';
-import 'package:turbo_coone1/views/screens/favoriteScreen.dart';
-import 'package:turbo_coone1/views/screens/fixtures_screen.dart';
-import 'package:turbo_coone1/views/screens/news_screen.dart';
-import 'package:turbo_coone1/views/screens/standingsScreen.dart';
-import 'package:turbo_coone1/views/screens/video_screen.dart';
+
+import '/views/drawer/app_drawer.dart';
+import '/views/screens/favorite_screen.dart';
+import '/views/screens/fixtures_screen.dart';
+
+import '/views/screens/standings_screen.dart';
+import '/views/screens/video_screen.dart';
 import '/consts/consts.dart';
 
 class ParentScreen extends StatefulWidget {
