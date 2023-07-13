@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import '/consts/consts.dart';
 
-class HomePageContainer extends StatelessWidget {
+class DateWidget extends StatelessWidget {
   final String day;
   final String date;
   final bool selected;
 
-  const HomePageContainer(
+  const DateWidget(
       {super.key,
       required this.day,
       required this.date,

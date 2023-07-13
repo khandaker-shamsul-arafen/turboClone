@@ -27,25 +27,26 @@ class LeagueFixtures extends StatelessWidget {
                 SizedBox(
                   height: AppSizes.newSize(2),
                 ),
-                ...List.generate(3, (index) {
-                  return Column(
-                    children: [
-                      const AllLeaguesWidget(
-                          teamImage1:
-                              "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
-                          teamImage2:
-                              "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
-                          teamName1: "Al Naser",
-                          teamName2: "Miami",
-                          state: " NS",
-                          score1: "0",
-                          score2: "1"),
-                      SizedBox(
-                        height: AppSizes.newSize(1.3),
-                      )
-                    ],
-                  );
-                })
+                // ...List.generate(3, (index) {
+                //   return Column(
+                //     children: [
+                //        FixtureWidget(
+                //         e,
+                //           teamImage1:
+                //               "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
+                //           teamImage2:
+                //               "https://cdn.sportmonks.com/images/countries/png/short/ua.png",
+                //           teamName1: "Al Naser",
+                //           teamName2: "Miami",
+                //           state: " NS",
+                //           score1: "0",
+                //           score2: "1"),
+                //       SizedBox(
+                //         height: AppSizes.newSize(1.3),
+                //       )
+                //     ],
+                //   );
+                // })
               ],
             );
           })

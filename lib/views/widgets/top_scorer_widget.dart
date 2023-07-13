@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
+import '../../models/top_scand_topast.dart';
 import '/consts/consts.dart';
 
 class TopScorerWidget extends StatelessWidget {
-  final String playerName;
-  final String gA;
-  final String playerImage;
-  final String leagueImage;
-  final String unknownName;
-  const TopScorerWidget(
-      {super.key,
-      required this.playerName,
-      required this.gA,
-      required this.playerImage,
-      required this.leagueImage,
-      required this.unknownName});
+  final Topscorers? topScorer;
+  final String top;
+
+  const TopScorerWidget(this.topScorer, {super.key, required this.top});
 
   @override
   Widget build(BuildContext context) {
+    String teamImage = topScorer?.participant?.imagePath ?? '';
+    String playerImage = topScorer?.player?.imagePath ?? '';
+    String playerName = topScorer?.player?.displayName ?? '';
+    String teamName = topScorer?.participant?.name ?? '';
+    int total = topScorer?.total ?? 0;
+
     return Container(
       color: Colors.white,
       height: AppSizes.newSize(25),
@@ -27,7 +26,7 @@ class TopScorerWidget extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(AppSizes.newSize(1)),
             child: Text(
-              "TOP SCORER",
+              top,
               style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: AppSizes.size13,
@@ -66,7 +65,7 @@ class TopScorerWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      gA,
+                      "Goals:  $total",
                       maxLines: 1,
                       style: TextStyle(
                         fontSize: AppSizes.size14,
@@ -83,11 +82,11 @@ class TopScorerWidget extends StatelessWidget {
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                  image: NetworkImage(leagueImage))),
+                                  image: NetworkImage(teamImage))),
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          unknownName,
+                          teamName,
                           maxLines: 1,
                           style: TextStyle(
                             height: 1,

@@ -15,7 +15,7 @@ class CardClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper oldClipper) {
-    throw false;
+    return false;
   }
 }
 

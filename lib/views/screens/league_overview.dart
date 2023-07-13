@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:turbo_coone1/views/screens/top_scores.dart';
+import '../../models/top_scand_topast.dart';
 import '/consts/consts.dart';
 
 import '../../controllers/league_details_controller.dart';
@@ -12,7 +14,9 @@ import '../widgets/top_scorer_widget.dart';
 import 'fixtures_details.dart';
 
 class LeagueOverview extends StatefulWidget {
-  const LeagueOverview({super.key});
+  const LeagueOverview({
+    super.key,
+  });
 
   @override
   State<LeagueOverview> createState() => _LeagueOverviewState();
@@ -55,26 +59,8 @@ class _LeagueOverviewState extends State<LeagueOverview> {
                           .map(
                             (element) => Column(
                               children: [
-                                AllLeaguesWidget(
-                                  teamImage1: element.participants?[0].imagePath
-                                          .toString() ??
-                                      "'",
-                                  teamImage2: element.participants?[1].imagePath
-                                          .toString() ??
-                                      '',
-                                  teamName1: element.participants?[0].name
-                                          .toString() ??
-                                      "",
-                                  teamName2: element.participants?[1].name
-                                          .toString() ??
-                                      "",
-                                  state:
-                                      element.state?.shortName.toString() ?? "",
-                                  time: DateFormat.Hm()
-                                      .format(DateTime.parse(
-                                          element.startingAt ?? ''))
-                                      .toString(),
-                                  goals: false,
+                                FixtureWidget(
+                                  element,
                                 ),
                                 Container(
                                   height: AppSizes.newSize(1),
@@ -117,27 +103,9 @@ class _LeagueOverviewState extends State<LeagueOverview> {
                             .map(
                               (element) => Column(
                                 children: [
-                                  AllLeaguesWidget(
-                                      teamImage1:
-                                          element.participants?[0].imagePath ??
-                                              "'",
-                                      teamImage2: element
-                                              .participants?[1].imagePath
-                                              .toString() ??
-                                          '',
-                                      teamName1: element.participants?[0].name
-                                              .toString() ??
-                                          "",
-                                      teamName2: element.participants?[1].name
-                                              .toString() ??
-                                          "",
-                                      state:
-                                          element.state?.shortName.toString() ??
-                                              "",
-                                      score1:
-                                          "${(element.participants?[0].id == element.scores?[1].participantId) ? (element.scores?[1].score?.goals) : '0'}",
-                                      score2:
-                                          "${(element.participants?[1].id == element.scores?[1].participantId) ? (element.scores?[3].score?.goals) : '0'}"),
+                                  FixtureWidget(
+                                    element,
+                                  ),
                                   Container(
                                     height: AppSizes.newSize(1),
                                     width: Get.width,
@@ -177,46 +145,81 @@ class _LeagueOverviewState extends State<LeagueOverview> {
                       const OverviewHeaderContainer(
                         buttonIndex: 1,
                       ),
-                      ...List.generate(
-                          4,
-                          (index) => TeamOverViewWidget(
-                                number: index,
-                                image:
-                                    'https://cdn.sportmonks.com/images/soccer/leagues/1/609.png',
-                                name: 'A. JUNIORS',
-                                p: '0',
-                                w: '0',
-                                d: '1',
-                                l: '2',
-                                gd: '0',
-                                pts: '0',
-                                buttonIndex: 1,
-                                card: 'w',
-                              )),
+                      // ignore: invalid_use_of_protected_member
+                      ...leagueDetailsController.teamOverviewDataList.value
+                          .map((index) {
+                        return TeamOverViewWidget(
+                          number: index.position ?? 0,
+                          image: index.participant?.imagePath.toString() ?? "",
+                          name: index.participant?.name ?? '',
+                          p: (index.details
+                                      ?.firstWhereOrNull(
+                                          (e) => (e.typeId == 129))
+                                      ?.value ??
+                                  '')
+                              .toString(),
+                          w: (index.details
+                                      ?.firstWhereOrNull(
+                                          (e) => (e.typeId == 130))
+                                      ?.value ??
+                                  '')
+                              .toString(),
+                          d: (index.details
+                                      ?.firstWhereOrNull(
+                                          (element) => (element.typeId == 131))
+                                      ?.value ??
+                                  '')
+                              .toString(),
+                          l: (index.details
+                                      ?.firstWhereOrNull(
+                                          (element) => (element.typeId == 132))
+                                      ?.value ??
+                                  '')
+                              .toString(),
+                          gd: (index.details
+                                      ?.firstWhereOrNull(
+                                          (element) => (element.typeId == 133))
+                                      ?.value ??
+                                  '')
+                              .toString(),
+                          pts: (index.details
+                                      ?.firstWhereOrNull(
+                                          (element) => (element.typeId == 187))
+                                      ?.value ??
+                                  '')
+                              .toString(),
+                          buttonIndex: 1,
+                          card: [],
+                        );
+                      }).take(4),
                     ],
                   ),
                 ),
                 SizedBox(
                   height: AppSizes.newSize(1),
                 ),
-                ...List.generate(2, (index) {
-                  return Column(
-                    children: [
-                      const TopScorerWidget(
-                        gA: 'Goal: 1',
-                        leagueImage:
-                            'https://cdn.sportmonks.com/images/soccer/leagues/1/609.png',
-                        playerImage:
-                            'https://cdn.sportmonks.com/images/soccer/players/1/1.png',
-                        playerName: 'Brayan Angulo',
-                        unknownName: 'Puebla',
-                      ),
-                      SizedBox(
-                        height: AppSizes.newSize(1),
-                      ),
-                    ],
-                  );
-                })
+                Obx(
+                  () {
+                    Topscorers? topScorer = leagueDetailsController
+                        .topScorerList
+                        .firstWhereOrNull((element) => element.typeId == 208);
+                    Topscorers? topAssist = leagueDetailsController
+                        .topScorerList
+                        .firstWhereOrNull((element) => element.typeId == 209);
+                    if (leagueDetailsController.topScorerLoading.value) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    return Column(
+                      children: [
+                        if (topScorer != null)
+                          TopScorerWidget(topScorer, top: 'Top SCORER'),
+                        SizedBox(height: AppSizes.newSize(1)),
+                        if (topAssist != null)
+                          TopScorerWidget(topAssist, top: 'Top ASSIST'),
+                      ],
+                    );
+                  },
+                )
               ],
             )
           ],

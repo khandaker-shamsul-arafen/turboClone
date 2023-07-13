@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:turbo_coone1/models/fixture_details.dart';
 import '../../consts/app_colors.dart';
 import '../../consts/app_sizes.dart';
 
 class LeagueNameWidget extends StatelessWidget {
-  final String ligueImage;
-  final String ligueText;
-  final String ligueCountry;
-  const LeagueNameWidget(
-      {super.key,
-      required this.ligueImage,
-      required this.ligueText,
-      required this.ligueCountry});
+  final League? league;
+  const LeagueNameWidget({
+    required this.league,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +38,7 @@ class LeagueNameWidget extends StatelessWidget {
                 ],
                 color: AppColors.fixtureContainerBackground,
                 image: DecorationImage(
-                  image: NetworkImage(ligueImage),
+                  image: NetworkImage(league?.imagePath ?? ''),
                   fit: BoxFit.contain,
                 ),
                 borderRadius: BorderRadius.circular(14),
@@ -69,7 +67,7 @@ class LeagueNameWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              ligueText,
+                              league?.name ?? '',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: AppSizes.size16,
@@ -89,7 +87,7 @@ class LeagueNameWidget extends StatelessWidget {
                           ],
                         ),
                         Text(
-                          ligueCountry,
+                          league?.country?.name ?? '',
                           style: TextStyle(
                               fontSize: AppSizes.size16,
                               fontWeight: FontWeight.w400,

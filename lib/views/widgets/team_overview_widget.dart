@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../consts/app_sizes.dart';
+import 'card_clipper.dart';
 
 class TeamOverViewWidget extends StatelessWidget {
   final int number;
@@ -13,7 +14,7 @@ class TeamOverViewWidget extends StatelessWidget {
   final String gd;
   final String pts;
   final int buttonIndex;
-  final String card;
+  final List<String> card;
   const TeamOverViewWidget(
       {super.key,
       required this.number,
@@ -46,6 +47,7 @@ class TeamOverViewWidget extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
+                    flex: 1,
                     child: Text(
                       number.toString(),
                       textAlign: TextAlign.left,
@@ -53,6 +55,7 @@ class TeamOverViewWidget extends StatelessWidget {
                   ),
                   const SizedBox(width: 5),
                   Expanded(
+                    flex: 1,
                     child: Container(
                       height: AppSizes.newSize(4),
                       width: AppSizes.newSize(4),
@@ -66,7 +69,7 @@ class TeamOverViewWidget extends StatelessWidget {
                   // ),
                   SizedBox(width: AppSizes.newSize(.2)),
                   Expanded(
-                    flex: 5,
+                    flex: 9,
                     child: Text(
                       name,
                       style: TextStyle(
@@ -80,73 +83,97 @@ class TeamOverViewWidget extends StatelessWidget {
             ),
           ),
           Visibility(
-            visible: (buttonIndex == 1 || buttonIndex == 2),
+            visible: (buttonIndex == 1 || buttonIndex == 2)
+                ? true
+                : (buttonIndex == 2)
+                    ? true
+                    : false,
             child: Expanded(
               flex: 1,
               child: Text(
                 p,
                 style: TextStyle(
-                    fontSize: AppSizes.size14, fontWeight: FontWeight.normal),
+                    fontSize: AppSizes.size14,
+                    fontWeight: FontWeight.normal,
+                    height: 2.2),
                 textAlign: TextAlign.center,
               ),
             ),
           ),
           Visibility(
-            visible: buttonIndex == 1,
+            visible: buttonIndex == 1 ? true : false,
             child: Expanded(
               flex: 1,
               child: Text(
                 w,
                 style: TextStyle(
-                    fontSize: AppSizes.size14, fontWeight: FontWeight.normal),
+                    fontSize: AppSizes.size14,
+                    fontWeight: FontWeight.normal,
+                    height: 2.2),
                 textAlign: TextAlign.center,
               ),
             ),
           ),
           Visibility(
-            visible: (buttonIndex == 1),
+            visible: (buttonIndex == 1) ? true : false,
             child: Expanded(
               flex: 1,
               child: Text(
                 d,
                 style: TextStyle(
-                    fontSize: AppSizes.size14, fontWeight: FontWeight.normal),
+                    fontSize: AppSizes.size14,
+                    fontWeight: FontWeight.normal,
+                    height: 2.2),
                 textAlign: TextAlign.center,
               ),
             ),
           ),
           Visibility(
-            visible: (buttonIndex == 1),
+            visible: (buttonIndex == 1) ? true : false,
             child: Expanded(
               flex: 1,
               child: Text(
                 l,
                 style: TextStyle(
-                    fontSize: AppSizes.size14, fontWeight: FontWeight.normal),
+                    fontSize: AppSizes.size14,
+                    fontWeight: FontWeight.normal,
+                    height: 2.2),
                 textAlign: TextAlign.center,
               ),
             ),
           ),
           Visibility(
-            visible: (buttonIndex == 1 || buttonIndex == 2),
+            visible: (buttonIndex == 1)
+                ? true
+                : (buttonIndex == 2)
+                    ? true
+                    : false,
             child: Expanded(
               flex: 1,
               child: Text(
                 gd,
                 style: TextStyle(
-                    fontSize: AppSizes.size14, fontWeight: FontWeight.normal),
+                    fontSize: AppSizes.size14,
+                    fontWeight: FontWeight.normal,
+                    height: 2.2),
                 textAlign: TextAlign.center,
               ),
             ),
           ),
           Visibility(
-            visible: (buttonIndex == 1 || buttonIndex == 2),
+            visible: (buttonIndex == 1)
+                ? true
+                : (buttonIndex == 2)
+                    ? true
+                    : false,
             child: Expanded(
               flex: 2,
               child: Text(
                 pts,
                 style: TextStyle(
-                    fontSize: AppSizes.size14, fontWeight: FontWeight.normal),
+                    fontSize: AppSizes.size14,
+                    fontWeight: FontWeight.normal,
+                    height: 2.2),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -158,134 +185,31 @@ class TeamOverViewWidget extends StatelessWidget {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ClipPath(
-                      //  clipper: CardClipper(),
-                      child: Container(
-                        color: (card == 'w')
-                            ? Colors.green
-                            : (card == 'L')
-                                ? Colors.red
-                                : Colors.grey,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: AppSizes.newSize(0.10),
-                              horizontal: AppSizes.newSize(0.8)),
-                          child: Text(
-                            "w",
-                            style: TextStyle(
-                                fontSize: AppSizes.size14,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.white),
-                            textAlign: TextAlign.center,
+                    ...card.map(
+                      (e) => ClipPath(
+                        clipper: CardClipper(),
+                        child: Container(
+                          color: (e.toUpperCase() == 'W')
+                              ? Colors.green
+                              : (e.toUpperCase() == 'L')
+                                  ? Colors.red
+                                  : Colors.grey,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: AppSizes.newSize(0.10),
+                                horizontal: AppSizes.newSize(0.8)),
+                            child: Text(
+                              e,
+                              style: TextStyle(
+                                  fontSize: AppSizes.size14,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    ClipPath(
-                      // clipper: CardClipper(),
-                      child: Container(
-                        //  color:(card=='w')? Colors.green:(card=='L')?Colors.red:Colors.grey,
-                        color: Colors.red,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: AppSizes.newSize(0.10),
-                              horizontal: AppSizes.newSize(0.8)),
-                          child: Text(
-                            "L",
-                            style: TextStyle(
-                                fontSize: AppSizes.size14,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.white),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    ),
-                    ClipPath(
-                      // clipper: CardClipper(),
-                      child: Container(
-                        color: Colors.grey,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: AppSizes.newSize(0.10),
-                              horizontal: AppSizes.newSize(0.8)),
-                          child: Text(
-                            "D",
-                            style: TextStyle(
-                                fontSize: AppSizes.size14,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.white),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    ),
-                    ClipPath(
-                      // clipper: CardClipper(),
-                      child: Container(
-                        color: (card == 'w')
-                            ? Colors.green
-                            : (card == 'L')
-                                ? Colors.red
-                                : Colors.grey,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: AppSizes.newSize(0.10),
-                              horizontal: AppSizes.newSize(0.8)),
-                          child: Text(
-                            "w",
-                            style: TextStyle(
-                                fontSize: AppSizes.size14,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.white),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    ),
-                    ClipPath(
-                      // clipper: CardClipper(),
-                      child: Container(
-                        color: (card == 'w')
-                            ? Colors.green
-                            : (card == 'L')
-                                ? Colors.red
-                                : Colors.grey,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: AppSizes.newSize(0.10),
-                              horizontal: AppSizes.newSize(0.8)),
-                          child: Text(
-                            "w",
-                            style: TextStyle(
-                                fontSize: AppSizes.size14,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.white),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    ),
-                    ClipPath(
-                      // clipper: CardClipper(),
-                      child: Container(
-                        //  color:(card=='w')? Colors.green:(card=='L')?Colors.red:Colors.grey,
-                        color: Colors.red,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: AppSizes.newSize(0.10),
-                              horizontal: AppSizes.newSize(0.8)),
-                          child: Text(
-                            "L",
-                            style: TextStyle(
-                                fontSize: AppSizes.size14,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.white),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    ),
+                    )
                   ]),
             ),
           ),

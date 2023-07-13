@@ -17,12 +17,14 @@ class LeagueDetailsScreen extends StatefulWidget {
   final String imagePath;
   final String leagueName;
   final String leagueCountry;
+  final String seasonId;
   const LeagueDetailsScreen(
       {super.key,
       required this.leagueId,
       required this.imagePath,
       required this.leagueName,
-      required this.leagueCountry});
+      required this.leagueCountry,
+      required this.seasonId});
 
   @override
   State<LeagueDetailsScreen> createState() => _LeagueDetailsScreenState();
@@ -38,6 +40,8 @@ class _LeagueDetailsScreenState extends State<LeagueDetailsScreen>
     super.initState();
     _tabController = TabController(length: 5, vsync: this);
     leagueDatailscontroller.recentMatches(widget.leagueId);
+    leagueDatailscontroller.getLeagueOverviewTAble(widget.seasonId);
+    leagueDatailscontroller.getTopScorer(widget.seasonId);
   }
 
   @override

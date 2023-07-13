@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../consts/app_colors.dart';
 import '../../consts/app_sizes.dart';
+import '../../controllers/league_details_controller.dart';
 import '../widgets/overview_header_container.dart';
 import '../widgets/team_overview_widget.dart';
 
@@ -13,8 +15,9 @@ class LeagueTable extends StatefulWidget {
 }
 
 class _LeagueTableState extends State<LeagueTable> {
-  int buttonIndex1 = 3;
+  int buttonIndex1yyyy = 3;
   String dropdownvalue = 'OVERALL';
+  LeagueDetailsController leagueDetailsController = Get.find();
 
   // List of items in our dropdown menu
   var items = [
@@ -35,13 +38,13 @@ class _LeagueTableState extends State<LeagueTable> {
             Row(
               children: [
                 Card(
-                  color: (buttonIndex1 == 1)
+                  color: (buttonIndex1yyyy == 1)
                       ? AppColors.leagueNameTabbarBt
                       : Colors.white,
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        buttonIndex1 = 1;
+                        buttonIndex1yyyy = 1;
                       });
                     },
                     child: Padding(
@@ -58,13 +61,13 @@ class _LeagueTableState extends State<LeagueTable> {
                   ),
                 ),
                 Card(
-                  color: (buttonIndex1 == 2)
+                  color: (buttonIndex1yyyy == 2)
                       ? AppColors.leagueNameTabbarBt
                       : Colors.white,
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        buttonIndex1 = 2;
+                        buttonIndex1yyyy = 2;
                       });
                     },
                     child: Padding(
@@ -79,13 +82,13 @@ class _LeagueTableState extends State<LeagueTable> {
                   ),
                 ),
                 Card(
-                  color: (buttonIndex1 == 3)
+                  color: (buttonIndex1yyyy == 3)
                       ? AppColors.leagueNameTabbarBt
                       : Colors.white,
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        buttonIndex1 = 3;
+                        buttonIndex1yyyy = 3;
                       });
                     },
                     child: Padding(
@@ -101,7 +104,7 @@ class _LeagueTableState extends State<LeagueTable> {
                 ),
                 const Spacer(),
                 ClipPath(
-                  //  clipper: DropDownClipper(),
+                  //clipper: DropDownClipper(),
                   child: Container(
                     color: Colors.white,
                     child: Padding(
@@ -148,29 +151,62 @@ class _LeagueTableState extends State<LeagueTable> {
             Expanded(
                 child: ListView(
               children: [
-                ...List.generate(3, (i) {
-                  return Column(
-                    children: [
-                      OverviewHeaderContainer(buttonIndex: buttonIndex1),
-                      ...List.generate(5, (i) {
-                        return TeamOverViewWidget(
-                          number: i + 1,
-                          image:
-                              'https://cdn.sportmonks.com/images/soccer/leagues/1/609.png',
-                          name: 'A. JUNIORS',
-                          p: '0',
-                          w: '0',
-                          d: '1',
-                          l: '2',
-                          gd: '0',
-                          pts: '0',
-                          buttonIndex: buttonIndex1,
-                          card: "w",
-                        );
-                      }),
-                    ],
-                  );
-                })
+                OverviewHeaderContainer(buttonIndex: buttonIndex1yyyy),
+                Obx(() => Column(
+                      children: [
+                        ...leagueDetailsController.teamOverviewDataList
+                            .map((index) {
+                          return TeamOverViewWidget(
+                            number: index.position ?? 0,
+                            image:
+                                index.participant?.imagePath.toString() ?? "",
+                            name: index.participant?.name ?? '',
+                            p: (index.details
+                                        ?.firstWhereOrNull(
+                                            (e) => (e.typeId == 129))
+                                        ?.value ??
+                                    '')
+                                .toString(),
+                            w: (index.details
+                                        ?.firstWhereOrNull(
+                                            (e) => (e.typeId == 130))
+                                        ?.value ??
+                                    '')
+                                .toString(),
+                            d: (index.details
+                                        ?.firstWhereOrNull((element) =>
+                                            (element.typeId == 131))
+                                        ?.value ??
+                                    '')
+                                .toString(),
+                            l: (index.details
+                                        ?.firstWhereOrNull((element) =>
+                                            (element.typeId == 132))
+                                        ?.value ??
+                                    '')
+                                .toString(),
+                            gd: (index.details
+                                        ?.firstWhereOrNull((element) =>
+                                            (element.typeId == 133))
+                                        ?.value ??
+                                    '')
+                                .toString(),
+                            pts: (index.details
+                                        ?.firstWhereOrNull((element) =>
+                                            (element.typeId == 187))
+                                        ?.value ??
+                                    '')
+                                .toString(),
+                            buttonIndex: buttonIndex1yyyy,
+                            card: index.form
+                                    ?.take(5)
+                                    .map((element) => element.form ?? '')
+                                    .toList() ??
+                                [],
+                          );
+                        }).take(5),
+                      ],
+                    ))
               ],
             )),
           ],

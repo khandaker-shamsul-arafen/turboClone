@@ -87,32 +87,6 @@ class FixtureController extends GetxController {
     loading.value = false;
   }
 
-  // liveScheudle() async {
-  //   loading.value = true;
-  //   leagueGroup.clear();
-  //   group.clear();
-  //   responseList.clear();
-  //   var liveResponse = await ApiService.get(
-  //       'https://api.sportmonks.com/v3/football/livescores?api_token=pOrQiOGJTy3tZzq0WxrGevTckFeZZo1IuNJZYlwml7sfCh5pEvMwrTc1KIZf&include=league.country;participants;state;scores',
-  //       headers: {});
-  //   liveModel.value =
-  //       FixtureDetailsResponse.fromJson(jsonDecode(liveResponse.body));
-  //   liveModel.value.data
-  //       ?.map((e) => responseList.contains(e) ? null : responseList.add(e))
-  //       .toList();
-  //   for (var item in responseList) {
-  //     dd("${item}");
-  //   }
-
-  //   selectedLeague = groupBy(responseList, (obj) => obj.league?.name ?? "");
-
-  //   group.add("All League");
-  //   selectedLeague.entries.map((value1) => group.add(value1.key)).toList();
-
-  //   selectedValue.value = group.first;
-  //   loading.value = false;
-  //   leagueGroup = selectedLeague;
-  // }
   liveScheudle() async {
     loadingLive.value = true;
     leagueGroupLive.clear();
