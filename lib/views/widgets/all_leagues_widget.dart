@@ -1,38 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:intl/intl.dart';
+import 'package:turbo_coone1/models/fixture_details.dart';
+import 'package:turbo_coone1/utils/helpers.dart';
 import '/consts/consts.dart';
 
-class AllLeaguesWidget extends StatelessWidget {
-  final String teamImage1;
-  final String teamImage2;
-  final String teamName1;
-  final String teamName2;
-  final String state;
-  final String score1;
-  final String score2;
-  final String time;
-  final bool live;
-  final bool goals;
+class FixtureWidget extends StatelessWidget {
+  final FixtureData fixture;
+
   final bool recentMatches;
 
-  const AllLeaguesWidget({
+  const FixtureWidget(
+    this.fixture, {
     super.key,
-    required this.teamImage1,
-    required this.teamImage2,
-    required this.teamName1,
-    required this.teamName2,
-    required this.state,
-    this.score1 = "",
-    this.score2 = "",
-    this.time = '',
-    this.live = false,
-    this.goals = true,
     this.recentMatches = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    String team1Image = fixture.participants?[0].imagePath ?? '';
+    String team2Image = fixture.participants?[1].imagePath ?? '';
+    String team1Name = fixture.participants?[0].name ?? '';
+    String team2Name = fixture.participants?[1].name ?? '';
+    String state = fixture.state?.shortName ?? '';
+    String time = DateFormat.Hm().format(DateTime.fromMillisecondsSinceEpoch(
+        (fixture.startingAtTimestamp ?? 0) * 1000));
+    bool goal =
+        (fixture.scores == null || fixture.scores!.isEmpty) ? false : true;
+    bool live =
+        (fixture.scores == null || fixture.scores!.isEmpty) ? false : true;
+    String? score1, score2;
+    if (live) {
+      dd(fixture.scores);
+      //TODO korte hobe
+      score1 =
+          "${(fixture.participants?[0].id == fixture.scores?[1].participantId) ? (fixture.scores?[1].score?.goals) : '0'}";
+      score2 =
+          "${(fixture.participants?[1].id == fixture.scores?[1].participantId) ? (fixture.scores?[3].score?.goals) : '0'}";
+    }
     return Column(
       children: [
         SizedBox(
@@ -65,10 +71,10 @@ class AllLeaguesWidget extends StatelessWidget {
                           width: Get.width * 0.1,
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: NetworkImage(teamImage1))),
+                                  image: NetworkImage(team1Image))),
                         ),
                         title: Text(
-                          teamName1,
+                          team1Name,
                           style: TextStyle(
                               fontSize: AppSizes.size13,
                               fontWeight: FontWeight.bold),
@@ -98,7 +104,7 @@ class AllLeaguesWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Visibility(
-                          visible: goals,
+                          visible: goal,
                           child: Text(
                             "$score1 - $score2",
                             style: TextStyle(
@@ -106,7 +112,7 @@ class AllLeaguesWidget extends StatelessWidget {
                           ),
                         ),
                         Visibility(
-                          visible: goals == false,
+                          visible: goal == false,
                           child: Text(
                             time,
                             style: TextStyle(
@@ -148,10 +154,10 @@ class AllLeaguesWidget extends StatelessWidget {
                           width: Get.width * 0.1,
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: NetworkImage(teamImage2))),
+                                  image: NetworkImage(team2Image))),
                         ),
                         title: Text(
-                          teamName2,
+                          team2Name,
                           style: TextStyle(
                               fontSize: AppSizes.size13,
                               fontWeight: FontWeight.bold),
