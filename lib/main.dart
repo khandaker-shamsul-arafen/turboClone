@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '/views/screens/parent_screen.dart';
+import 'package:turbo_coone1/views/screens/onboarding_screen.dart';
+import 'package:turbo_coone1/views/screens/splash_.dart';
 import '/consts/consts.dart';
 import '/controllers/setting_controller.dart';
 
@@ -34,7 +35,7 @@ main() async {
         return MaterialPageRoute(builder: (context) => builder!(context));
       },
       onInit: () {
-        Get.put(SettingController());
+        //  Get.put(SettingController());
         //Get.put(AuthController());
       },
       home: const MyApp(),
@@ -50,7 +51,7 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  SettingController settingController = Get.find();
+  // SettingController settingController = Get.find();
 
   var hasNotification = false;
 
@@ -60,13 +61,13 @@ class MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    settingController.loadData();
+    //  settingController.loadData();
   }
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: ParentScreen(),
+      body: OnboardingScreen(),
     );
   }
 }

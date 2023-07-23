@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:turbo_coone1/views/screens/top_scores.dart';
 import '../../models/top_scand_topast.dart';
 import '/consts/consts.dart';
 
 import '../../controllers/league_details_controller.dart';
-import '../widgets/all_leagues_widget.dart';
+import '../widgets/fixture_widget.dart';
 import '../widgets/match_status_container.dart';
 import '../widgets/overview_header_container.dart';
 import '../widgets/team_overview_widget.dart';
@@ -189,7 +187,7 @@ class _LeagueOverviewState extends State<LeagueOverview> {
                                   '')
                               .toString(),
                           buttonIndex: 1,
-                          card: [],
+                          card: const [],
                         );
                       }).take(4),
                     ],

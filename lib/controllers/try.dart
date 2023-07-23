@@ -1,53 +1,49 @@
-// import 'dart:convert';
-// import 'package:collection/collection.dart';
-// import 'package:get/get.dart';
-// import 'package:intl/intl.dart';
-// import 'package:turbo_football_clone/models/fixture.dart';
-// import 'package:turbo_football_clone/services/api_services.dart';
-
-// class FixtureController extends GetxController {
-//   RxBool isLoading = true.obs;
-//   Rx<Fixture> fixtures = Fixture().obs;
-//   Map<String, List<Data>> permanentLeagueGroup = <String, List<Data>>{}.obs;
-//   Map<String, List<Data>> leagueGroup = <String, List<Data>>{}.obs;
-//   RxList<String> allLeagues = <String>[].obs;
-//   Rx<DateTime> currentDateIndex = DateTime.now().obs;
-//   Rx<String> currentLeague = "".obs;
-
-//   @override
-//   void onInit() {
-//     // TODO: implement onInit
-//     super.onInit();
-//     getAllFixtures(DateFormat("yyyy-MM-dd").format(DateTime.now()).toString());
-//   }
-
-//   getLeagueFixture(String value) {
-//     isLoading.value = true;
-//     currentLeague.value = value;
-
-//     leagueGroup = value == allLeagues.first
-//         ? permanentLeagueGroup
-//         : Map.fromEntries(permanentLeagueGroup.entries
-//             .where((entry) => entry.key.toLowerCase() == value.toLowerCase()));
-//     isLoading.value = false;
-//   }
-
-//   getAllFixtures(String date) async {
-//     var resposnse = await ApiService.get(
-//         'https://api.sportmonks.com/v3/football/fixtures/date/${date}?api_token=pOrQiOGJTy3tZzq0WxrGevTckFeZZo1IuNJZYlwml7sfCh5pEvMwrTc1KIZf&include=league%3Bleague.country%3Bparticipants%3Bstage%3Bscores%3Bstate%3B',
-//         headers: {});
-//     var responseDecode = jsonDecode(resposnse.body);
-//     fixtures.value = Fixture.fromJson(responseDecode);
-//     leagueGroup = groupBy(
-//         fixtures.value.data as Iterable<Data>, (p0) => p0.league?.name ?? "");
-
-//     permanentLeagueGroup = leagueGroup;
-//     allLeagues.value = ["ALL LEAGUES"];
-//     List<String> currentLeagueList = leagueGroup.keys.toList();
-//     allLeagues.value = [...allLeagues, ...currentLeagueList];
-//     currentLeague.value = allLeagues.first;
-//     isLoading.value = false;
-//   }
-// }
-
- //var newMap = groupBy(responseModel.value.data as Iterable<Data>, (obj) => obj.leagueId);
+//  Padding(
+//               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+//               child: ClipPath(
+//                 clipper: SearchClipper(),
+//                 child: Container(
+//                   width: Get.width,
+//                   color: AppColors.searchBar,
+//                   child: TextField(
+//                     controller: searchController,
+//                     style: const TextStyle(
+//                       color: Colors.black,
+//                     ),
+//                     cursorColor: Colors.black.withOpacity(.6),
+//                     decoration: InputDecoration(
+//                       hintText: 'Search',
+//                       hintStyle: TextStyle(
+//                         color: Colors.black.withOpacity(.5),
+//                       ),
+//                       contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+//                       border: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(32.0),
+//                         borderSide: const BorderSide(color: Colors.transparent),
+//                       ),
+//                       enabledBorder: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(32.0),
+//                         borderSide: const BorderSide(color: Colors.transparent),
+//                       ),
+//                       focusedBorder: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(32.0),
+//                         borderSide: const BorderSide(color: Colors.transparent),
+//                       ),
+//                       prefixIcon: const Icon(
+//                         Icons.search,
+//                         color: AppColors.primaryColor,
+//                       ),
+//                     ),
+//                     onChanged: (q) {
+//                       if (isSelected.value == 1) {
+//                         leagueController.searchLeagues(q);
+//                       } else if (isSelected.value == 2) {
+//                         teamController.searchTeams(q);
+//                       } else if (isSelected.value == 3) {
+//                         playerController.searchPlayers(q);
+//                       }
+//                     },
+//                   ),
+//                 ),
+//               ),
+//             ),

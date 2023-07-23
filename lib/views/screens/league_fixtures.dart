@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '/consts/consts.dart';
 
-import '../widgets/all_leagues_widget.dart';
-
 class LeagueFixtures extends StatelessWidget {
   const LeagueFixtures({super.key});
 

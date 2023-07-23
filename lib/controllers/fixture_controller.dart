@@ -71,6 +71,7 @@ class FixtureController extends GetxController {
 
     // print(responseModel.value.data?[0].league?.country?.name);
   }
+
   // live:
 
   getLeagueFixture(String value) {

@@ -33,7 +33,6 @@ class FixtureWidget extends StatelessWidget {
     String? score1, score2;
     if (live) {
       dd(fixture.scores);
-      //TODO korte hobe
       score1 =
           "${(fixture.participants?[0].id == fixture.scores?[1].participantId) ? (fixture.scores?[1].score?.goals) : '0'}";
       score2 =

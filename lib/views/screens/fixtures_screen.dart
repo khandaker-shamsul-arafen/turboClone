@@ -11,7 +11,7 @@ import '../../consts/app_sizes.dart';
 
 import '../../controllers/fixture_controller.dart';
 import '../../models/fixture_details.dart';
-import '../widgets/all_leagues_widget.dart';
+import '../widgets/fixture_widget.dart';
 import '../widgets/home_page_container.dart';
 import '../widgets/league_name_widget.dart';
 

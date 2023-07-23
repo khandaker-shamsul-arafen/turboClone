@@ -10,6 +10,7 @@ class AppColors {
   static final Color border = Colors.grey.withOpacity(0.5);
   static const Color bottomNavigationBackground = Color.fromARGB(255, 11, 3, 3);
   static const Color selected = Colors.redAccent;
+  static final Color searchBar = HexColor('C7C7CC');
   static final Color parentBackground = HexColor('F0F0F0');
   static final Color leagueNameTabbarBt = HexColor('F1F1F1');
   static final Color navbarColor = HexColor('020129');
